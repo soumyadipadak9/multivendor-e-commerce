@@ -1,0 +1,133 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-sizing: border-box;
+}
+.container{
+    margin: 20px 200px;
+    display: flex;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+}
+
+.right-box{
+    width:32%;
+    border: 0px solid rgb(38, 136, 103);
+    border-radius: 10px;
+}
+.main-image-box{
+    padding: 30px 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-image{
+    height: 400px;
+    width: 300px;
+    object-fit: cover;
+    border: 1px solid black;
+}
+.small-image{
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    align-items: center;
+}
+.image-box{
+    margin: 8px 8px 8px 8px;
+    height: 110px;
+    width: 70px;
+    cursor: pointer;
+    border: 1px solid rgb(38, 136, 103);
+    display: flex;
+    border-radius: 1px;
+    align-items: center;
+    justify-content: center;
+}
+.image{
+    height: 100%;
+    width: 100%;
+}
+.details-box{
+    width:50% ;
+    padding-left: 50px;
+}
+
+/* h1,h2,p,h4{
+    padding-left: 100px;
+} */
+
+.productName, .stock, .price, .cart, .description, .full-description{
+    padding-left: 100px;
+}
+
+.detail-box div{
+    margin: 20px auto;
+    font-size: larger;
+}
+
+#container2 {
+    max-width: 1000px;
+    /* background-color: rgb(235, 235, 235); */
+    background-color: #ffffff;
+    margin: 70px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#container2 form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input{
+    width: 900px;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.submit{
+    background-color: #14213d;
+    color: #ffffff;
+    margin-top: 30px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container2{
+    /* width: 800px; */
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.updt_btn{
+    background-color: #e49137;
+    padding: 12px 20px;
+    /* background-color: #007bff; */
+    width: 200px;
+    display: block;
+    margin: auto;
+    margin-bottom: 60px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}

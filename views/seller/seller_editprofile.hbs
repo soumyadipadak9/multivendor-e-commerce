@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seller edit profile</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/EditProfile.css">
+</head>
+
+<body>
+    {{>seller_header}}
+
+    <div id="main-container">
+        <div id="container">
+            <h1>Seller Details</h1>
+            <form action="/seller_editprofile?_method=PUT" method="post" id="box">
+
+                <p>Name:</p>
+                <input type="text" name="name" required placeholder="Name" class="input" required maxlength="40" readonly value="{{sellerData.name}}">
+
+                <p>Email:</p>
+                <input type="email" required name="email" placeholder="Email" class="input" required maxlength="40" readonly value="{{sellerData.email}}">
+
+                <p>PAN card No:</p>
+                <input type="PanNo" required name="panNo" placeholder="panNo" class="input" required maxlength="10" readonly value="{{sellerData.panNo}}">
+
+                <p>GST Id:</p>
+                <input type="gstNo" required name="gstNo" placeholder="gstNo" class="input" required maxlength="15" readonly value="{{sellerData.gstNo}}">
+
+
+
+                <p>Contact No:</p>
+                <input type="text" name="contactNo" required placeholder="Contact Number" class="input" required
+                    maxlength="10" value="{{sellerData.contactNo}}">
+
+
+                <p>Store Name:</p>
+                <input type="text" name="storeName" required placeholder="Store Name" class="input" required
+                    maxlength="50" value="{{sellerData.storeName}}">
+
+                <div class="addr">Address</div>
+
+                <p>Street/Villege:</p>
+                <input type="text" name="street1" placeholder="Street" class="input" value="{{sellerData.address.street}}">
+
+                <p>City/District:</p>
+                <input type="text" name="city1" placeholder="City" class="input" value="{{sellerData.address.city}}">
+
+                <p>State:</p>
+                <input type="text" name="state1" placeholder="State" class="input" value="{{sellerData.address.state}}">
+
+                <p>Zipcode:</p>
+                <input type="text" name="zipcode1" placeholder="zipcode" class="input" value="{{sellerData.address.zipcode}}">
+
+                <p>Full Address:</p>
+                <textarea name="fullAddr1" placeholder="Full address" class="input">{{sellerData.address.fullAddr}}</textarea>
+
+                <div class="addr">Pickup Address</div>
+
+                <p>Street/Villege:</p>
+                <input type="text" name="street2" placeholder="Street" class="input" value="{{sellerData.pickupAddress.street}}">
+
+                <p>City/District:</p>
+                <input type="text" name="city2" placeholder="City" class="input" value="{{sellerData.pickupAddress.city}}">
+
+                <p>State:</p>
+                <input type="text" name="state2" placeholder="State" class="input" value="{{sellerData.pickupAddress.state}}">
+
+                <p>Zipcode:</p>
+                <input type="text" name="zipcode2" placeholder="zipcode" class="input" value="{{sellerData.pickupAddress.zipcode}}">
+
+                <p>Full Address:</p>
+                <textarea name="fullAddr2" placeholder="Full address" class="input">{{sellerData.pickupAddress.fullAddr}}</textarea>
+
+
+
+                <input type="submit" id="submit" value="Submit">
+            </form>
+
+            <p>{{err}}</p>
+        </div>
+    </div>
+</body>
+
+</html>

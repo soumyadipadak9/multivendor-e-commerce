@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/admin.css">
+    {{!--
+    <link rel="stylesheet" href="/product_update.css"> --}}
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
+    {{!--
+    <link rel="stylesheet" href="/user.css"> --}}
+    {{!--
+    <link rel="stylesheet" href="/employee_delete.css"> --}}
+    <link rel="stylesheet" href="/category.css">
+    <style>
+        #categoryName {
+            font-size: 20px;
+            height: 24px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    {{>admin_header_new}}
+    {{!-- <h1 class="entry">Hi {{nam2}}, this is admin page.</h1> --}}
+
+    <button id="add" onclick="clickAdd()">Add Category</button>
+
+    <div id="container" style="display: none;">
+        <span class="cross" onclick="containerNone()">X</span>
+        <h1 class="h1">Add Category</h1>
+        <form action="/category" method="post" id="box">
+
+            <p>Category Name:</p>
+            <textarea name="categoryName" id="categoryName" required maxlength="300"></textarea>
+
+            <p>Parent Category:</p>
+            <select name="parentCategory" id="parentCategory" onchange="changeCategory()">
+                <option value=null>Select</option>
+                {{#each distinctCategories}}
+                <option value="{{this.categoryName}}">{{this.categoryName}}</option>
+                {{/each}}
+            </select>
+
+            <div id="custom-attributes">
+                <!-- Dynamic input fields for custom attributes will be added here -->
+            </div>
+            <button type="button" id="add-attribute">Add Attribute</button>
+
+            <input type="submit" id="submit" value="Add Category">
+        </form>
+        <p class="err">{{err}}</p>
+    </div>
+
+
+
+
+    <div class="container" id="container2">
+        <h1 class="page-title">Category List</h1>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Category Id</th>
+                    <th>Category Name</th>
+                    <th>Parent Category</th>
+                    <th>Attributes</th>
+                    {{!-- <th>Active</th> --}}
+                    {{!-- <th colspan=2>Action</th> --}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each distinctCategoriesName}}
+                <tr id="{{this._id}}">
+                    <td>{{this._id}}</td>
+                    <td>{{this.categoryName}}</td>
+                    <td>{{this.parentCategory}}</td>
+                    <td>
+                        <select name="" id="{{this._id}}attr">
+                            {{#each this.customAttributes}}
+                            <option value="{{this.name}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    {{!-- <td class="active_{{this.active}}"></td> --}}
+                    {{!-- <td><a href="/user/{{this._id}}"><button
+                                class="action-button details-button">Details</button></a>
+                    </td> --}}
+
+                    {{!-- <td><button class="action-button details-button"
+                            onclick="clickUpdate('{{this._id}}')">Update</button></td> --}}
+                    {{!-- <td><button class="action-button details-button" id="delete_btn"
+                            onclick="clickDelete('{{this._id}}')">Delete</button></td> --}}
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div id="delete" style="display: none;">
+        <p>Do you really want to delete this category?</p>
+        <div id="delete_option">
+            {{!-- <button onclick="cancel_popup()">Cancel</button>
+            <form action="/employee/{{target_note._id}}?_method=DELETE" method="post">
+                <input type="submit" id="confirm_delete" value="Delete">
+            </form> --}}
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+
+    {{>footer}}
+</body>
+
+<script>
+    // function changeCategory(){
+    //     let selectedOption=document.getElementById("productCategory").value;
+    //     if(selectedOption==="others"){
+    //         document.getElementById("productCategory").removeAttribute("name");
+    //         document.getElementById("newCategory").style.display="";
+    //         document.getElementById("productCategory2").style.display="";
+    //         document.getElementById("productCategory2").setAttribute("name","productCategory");
+    //         document.getElementById("productCategory2").setAttribute("required",true);
+    //     }
+    //     else{
+    //         document.getElementById("productCategory").setAttribute("name","productCategory");
+    //         document.getElementById("newCategory").style.display="none";
+    //         document.getElementById("productCategory2").style.display="none";
+    //         document.getElementById("productCategory2").removeAttribute("required")
+    //     }
+    // } 
+
+
+    function clickAdd() {
+        document.getElementById("container").style.display = '';
+        document.getElementById("container2").style.display = 'none';
+        //document.getElementById("search").style.display='none';
+        //document.getElementById("employee_table").style.display='none';
+    }
+
+
+    function containerNone() {
+        document.getElementById("container").style.display = 'none';
+        document.getElementById("container2").style.display = '';
+    }
+
+
+    function clickUpdate(e) {
+        const update_form = document.getElementById("update");
+        //console.log(update_form);
+        //console.log(update_form[0]);
+        //console.log(update_form[1]);
+        //console.log(update_form[2]);
+        //console.log(update_form[3]);
+
+        //console.log(update_form.length);
+
+        update_form.action = `/employee/${e}?_method=PUT`;
+
+        const table_data = document.getElementById(e);
+        //console.log(table_data.children)
+
+
+        update_form[0].value = table_data.children[1].innerText;
+        update_form[1].value = table_data.children[2].innerText;
+
+        const cusAttr = document.getElementById(`${e}attr`).children;
+
+        for (let i = 0; i < cusAttr.length; i++) {
+            console.log(cusAttr[i].innerText)
+            document.getElementById('custom-attributes2').innerHTML += `<div class='features'>
+                    <input type='text' placeholder='Attribute Name' value='${cusAttr[i].innerText}' name='customAttributes[${i}][name]'>
+                    <button type='button' class='remove-attribute' onclick='clkAttr(${i})'>Remove</button>
+            </div>`
+        }
+
+    }
+
+    function clkAttr(e) {
+        document.getElementById('custom-attributes2').removeChild(document.getElementById('custom-attributes2').children[e]);
+    }
+
+
+
+    function clickDelete(e) {
+        document.getElementById("delete").style.display = "";
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("delete_option").innerHTML = `<button onclick="cancel_popup()">Cancel</button>
+            <form action="/category/${e}?_method=DELETE" method="post">
+                <input type="submit" id="confirm_delete" value="Delete">
+            </form>`;
+    }
+
+    function cancel_popup() {
+        document.getElementById("delete").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    }
+
+
+
+
+    // your_client_js.js
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const customAttributesContainer = document.getElementById('custom-attributes');
+        const addAttributeButton = document.getElementById('add-attribute');
+
+        const updateAttributeNames = function () {
+            const features_class = document.getElementsByClassName("features");
+            for (let i = 0; i < features_class.length; i++) {
+                features_class[i].children[0].setAttribute("name", `customAttributes[${i}][name]`);
+                //features_class[i].children[1].setAttribute("name", `customAttributes[${i}][value]`);
+            }
+        };
+
+        updateAttributeNames();
+
+        // Handle removal of dynamically added elements
+        addAttributeButton.addEventListener('click', function () {
+            const attributeGroup = document.createElement('div');
+            attributeGroup.setAttribute("class", "features");
+            attributeGroup.innerHTML = `
+            <input type='text' placeholder='Attribute Name'>
+            <button type='button' class='remove-attribute'>Remove</button>
+        `;
+
+            customAttributesContainer.appendChild(attributeGroup);
+
+            // Update attribute names
+            updateAttributeNames();
+
+            const removeAttributeButton = attributeGroup.querySelector('.remove-attribute');
+            removeAttributeButton.addEventListener('click', function () {
+                customAttributesContainer.removeChild(attributeGroup);
+                updateAttributeNames();
+            });
+        });
+
+        // Handle removal of pre-rendered elements
+        const preRenderedRemoveButtons = document.querySelectorAll('.features .remove-attribute');
+        preRenderedRemoveButtons.forEach(function (removeButton) {
+            removeButton.addEventListener('click', function () {
+                const featureElement = removeButton.closest('.features');
+                customAttributesContainer.removeChild(featureElement);
+                updateAttributeNames();
+            });
+        });
+    });
+
+</script>
+{{!--
+<script src="/script/footer_position.js"></script> --}}
+
+</html>

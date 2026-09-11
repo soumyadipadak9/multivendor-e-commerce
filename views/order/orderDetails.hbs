@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirm</title>
+  <link rel="stylesheet" href="/navbar2.css">
+  <link rel="stylesheet" href="/order_confirm.css">
+  <link rel="stylesheet" href="/footer.css">
+  <style>
+    .hide {
+      display: none;
+      /* Hide the input field for rating */
+    }
+
+    .rating {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .star {
+      display: inline-block;
+      padding: 5px;
+      font-size: 50px;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .star.active {
+      color: #f7d703;
+    }
+
+    #update_review, #add_review {
+      width: 400px;
+      height: 340px;
+      /* margin-left: 30px; */
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      margin-left: -200px;
+      margin-top: -100px;
+      
+      z-index: 2;
+
+
+      background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+    }
+
+    #update_review textarea, #add_review textarea{
+      height: 150px;
+      width: 89%;
+      margin: auto;
+      display: block;
+    }
+
+    #update_review button, #add_review button{
+      height: 50px;
+      width: 90%;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .cancel{
+      position: absolute;
+      right: 3%;
+      top: 3%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  {{>header}}
+  <main>
+
+
+    {{!-- <div class="thank">Thank you for your order! Your order has been confirmed and will be processed shortly.</div> --}}
+    <div class="order-id">Order ID: {{OrderID._id}}</div>
+
+    <div class="container-1">
+      <div class="product-info">
+        <!-- Product  -->
+        <div class="product">
+          <div class="product-image">
+            <a href="/products/{{Order_product._id}}">
+              <img src="{{Order_product.productImage}}" alt="Product Image" class="image">
+            </a>
+          </div>
+          <div class="product-info">
+            <a href="/products/{{Order_product._id}}">
+              <h2 class="product_name">{{Order_product.productName}}</h2>
+            </a>
+            <h3 class="quantity">Quantity: {{Order_subID.quantity}}</h3>
+            <h3 class="price">Total: {{Order_subID.Total}}</h3>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="delivery-details">
+        <div class="progress-bar">
+          <div class="progress-item confirmed">
+            <span class="progress-text">{{process_order.Status1}}</span>
+            <span class="progress-date">{{process_order.Date1}}</span>
+          </div>
+          <div class="progress-item shipped">
+            <span class="progress-text">{{process_order.Status2}}</span>
+            <span class="progress-date">{{process_order.Date2}}</span>
+          </div>
+          {{!-- <div class="progress-item out-for-delivery">
+            <span class="progress-text">Out for Delivery</span>
+            <span class="progress-date">April 9, 2024</span>
+          </div> --}}
+          <div class="progress-item delivered">
+            <span class="progress-text">{{process_order.Status3}}</span>
+            <span class="progress-date">{{process_order.Date3}}</span>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+    <hr>
+    <!-- Delivery Address -->
+    <div class="delivery-address">
+      <h2>Delivery Address</h2>
+      <p>Name: {{OrderID.shippingDetails.Name}} | Contact Number: {{OrderID.shippingDetails.contactNo}} |
+        Street/Villege: {{OrderID.shippingDetails.street}} | City/Locality: {{OrderID.shippingDetails.city}} | State:
+        {{OrderID.shippingDetails.state}} | Zip code: {{OrderID.shippingDetails.zipcode}}</p>
+      <p>Full Address: {{OrderID.shippingDetails.fullAddr}}</p>
+    </div>
+
+    <hr>
+    <div class="button_line">
+      <!-- Cancel Button -->
+      {{!-- <button type="button" id="confirmAddressBtn" onclick="giveReview('{{Order_product._id}}')">Review</button>
+      --}}
+      {{{add_review_btn}}}
+      {{{edit_review_btn}}}
+
+      {{!-- <button type="button" id="confirmAddressBtn" onclick="downloadInvoice('{{Order_subID._id}}')"
+        class="download">Invoice</button> --}}
+      {{{in_voice}}}
+
+      {{!-- <a>
+        <img src="file:///D:/PROJECTS/New%20folder%20(2)/c%20order%20page/download-solid.svg" c alt="Product Image"
+          class="download">
+      </a> --}}
+
+    </div>
+
+
+
+
+    {{!-- <form action="/review_post/{{Order_product._id}}" method="post" id="add_review" style="display: none;">
+      <div class="rating" id="rating">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+      </div>
+      <input type="text" name="ratings" class="hide">
+      <textarea id="review" name="review" placeholder="Write your review here..."></textarea>
+      <button id="submit">Submit</button>
+    </form> --}}
+
+    {{!-- <form action="/review_update/{{Order_product._id}}?_method=PUT" method="post" id="update_review"
+      style="display: none;">
+      <div class="rating" id="rating">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+      </div>
+      <input type="text" name="ratings" class="hide" value={{ratings}}>
+      <textarea id="review" name="review" placeholder="Write your review here...">{{review_comment}}</textarea>
+      <button id="submit">Submit</button>
+    </form> --}}
+
+
+    {{{add_review_box}}}
+    {{{edit_review_box}}}
+
+
+  </main>
+
+
+
+  {{>footer}}
+
+  <script src="/script/footer_position.js"></script>
+  <script>
+    const progress_date = document.getElementsByClassName("progress-date");
+    for (let i = 0; i < progress_date.length; i++) {
+      let newDt = new Date(progress_date[i].innerText);
+      if (newDt != 'Invalid Date') {
+        if (newDt.getHours() > 0 && newDt.getHours() < 12) {
+          var hour = newDt.getHours();
+          var ap = "AM";
+        }
+        else if (newDt.getHours() == 0) {
+          var hour = newDt.getHours() + 12;
+          var ap = "AM";
+        }
+        else if (newDt.getHours() == 12) {
+          var hour = newDt.getHours();
+          var ap = "PM";
+        }
+        else if (newDt.getHours() > 12 && newDt.getHours() < 24) {
+          var hour = newDt.getHours() - 12;
+          var ap = "PM";
+        }
+
+        if (newDt.getMonth() == 0) {
+          var month = "Jan"
+        }
+        else if (newDt.getMonth() == 1) {
+          var month = "Feb"
+        }
+        else if (newDt.getMonth() == 2) {
+          var month = "Mar"
+        }
+        else if (newDt.getMonth() == 3) {
+          var month = "Apr"
+        }
+        else if (newDt.getMonth() == 4) {
+          var month = "May"
+        }
+        else if (newDt.getMonth() == 5) {
+          var month = "Jun"
+        }
+        else if (newDt.getMonth() == 6) {
+          var month = "Jul"
+        }
+        else if (newDt.getMonth() == 7) {
+          var month = "Aug"
+        }
+        else if (newDt.getMonth() == 8) {
+          var month = "Sep"
+        }
+        else if (newDt.getMonth() == 9) {
+          var month = "Oct"
+        }
+        else if (newDt.getMonth() == 10) {
+          var month = "Nov"
+        }
+        else if (newDt.getMonth() == 11) {
+          var month = "Dec"
+        }
+
+        console.log(newDt);
+        progress_date[i].innerText = `${hour}:${newDt.getMinutes()} ${ap}, ${month} ${newDt.getDate()}, ${newDt.getFullYear()}`;
+      }
+    }
+
+
+
+    function downloadInvoice(orderId) {
+      window.location.href = `/download-invoice/${orderId}`;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    const stars = document.querySelectorAll('.star');
+    const reviewInput = document.getElementById('review');
+    const submitButton = document.getElementById('submit');
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        const value = parseInt(star.getAttribute('data-value'));
+        console.log(value);
+        document.getElementsByClassName("hide")[0].value = value;
+
+        // Activate selected star and deactivate others
+        for (let i = 0; i < stars.length; i++) {
+          if (i < value) {
+            stars[i].classList.add('active');
+          } else {
+            stars[i].classList.remove('active');
+          }
+        }
+      });
+    });
+
+
+    for (let j = 0; j < document.getElementsByClassName("hide")[0].value; j++) {
+      console.log(document.getElementsByClassName("hide")[0].value)
+      stars[j].classList.add('active');
+    }
+
+    submitButton.addEventListener('click', () => {
+      const selectedValue = document.querySelector('.star.active') ? document.querySelector('.star.active').getAttribute('data-value') : null;
+      const reviewText = reviewInput.value.trim();
+
+      if (selectedValue && reviewText !== '') {
+        console.log("Selected value: " + selectedValue);
+        console.log("Review: " + reviewText);
+        // Here you can perform further actions, such as sending the review to a server
+      } else {
+        alert("Please select a rating and write a review.");
+      }
+    });
+
+
+
+
+
+
+    function giveReview(x) {
+      console.log("Give Review: " + x);
+      document.getElementById("add_review").style.display = "";
+    }
+
+    function editReview(x) {
+      console.log("Edit Review: " + x);
+      document.getElementById("update_review").style.display = "";
+    }
+
+    function cancel1(){
+      document.getElementById("add_review").style.display = "none";
+    }
+
+    function cancel2(){
+      document.getElementById("update_review").style.display = "none";
+    }
+
+  </script>
+</body>
+
+</html>

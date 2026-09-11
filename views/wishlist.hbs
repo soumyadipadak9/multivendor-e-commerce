@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="/categoryProduct.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
+</head>
+
+<body>
+
+    {{>header}}
+
+    <h2 class="category-heading">Wishlist</h2>
+    <div class="product-grid">
+        {{#each orderedWishlistProducts}}
+        <div class="container">
+            <a href="/products/{{this._id}}">
+                <!-- 1st Product -->
+                <div class="product-card">
+                    <img src="{{this.productImage}}" alt="Product Image">
+                    <div class="product-details">
+                        <p><strong class="pName">{{this.productName}}</strong></p>
+                        <p class="product-price">₹{{this.price}}</p>
+                        <p class="discount-percentage">{{this.discountPercentage}}% off</p>
+                        <p class="discounted-price">₹{{this.discountedPrice}}</p>
+                    </div>
+                </div>
+            </a>
+
+            <form action="/remove_wishlist/{{this._id}}?_method=PUT" method="POST">
+                <input type="submit" value="Remove">
+            </form>
+        </div>
+        {{/each}}
+    </div>
+
+    {{>footer}}
+</body>
+<script src="/script/pNameCut.js"></script>
+<script src="/script/footer_position.js"></script>
+
+</html>

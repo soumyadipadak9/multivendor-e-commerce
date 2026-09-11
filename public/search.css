@@ -1,0 +1,143 @@
+.container{
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.sort_filter{
+    width: 100%;
+    height: 700px;
+    border: 1px solid black;
+    /* margin: 50px auto 0 100px; */
+    position: sticky;
+    top: 100px;
+    left: 100px;
+}
+
+.sorting{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.sort_by{
+    font-size: 30px;
+}
+
+#sort{
+    width: 200px;
+    height: 30px;
+}
+
+.price-filter{
+    margin-top: 70px;
+    margin-left: 50px;
+}
+
+.price_range_heading{
+    font-size: 30px;
+}
+
+.price-filter div{
+    font-size: 20px;
+    margin: 15px auto;
+}
+
+.price-filter div input{
+    width: 16px;
+    height: 16px;
+}
+
+#filter{
+    padding: 12px 20px;
+    background-color: #e49137;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 50px;
+}
+
+.product-grid {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    /* justify-content: space-around;  */
+    margin: auto;
+    margin-top: 40px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.product-link{
+    margin-bottom: 20px;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-evenly; */
+    justify-content: space-around;
+    /* max-width: 240px;  */
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    /* margin-bottom: 20px;  */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.558);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    position: relative;
+    border-radius: 10px;
+}
+
+.product-card img {
+    width: 12rem;
+    height: 16rem;
+    object-fit:cover;
+    margin-bottom: 10px; 
+}
+.product-details{
+    width: calc(80% - 15rem);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-description{
+    color: black;
+    margin-top: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+p strong{
+    font-size: 20px;
+    color: black;
+
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    color: #b12704;
+    text-decoration: line-through;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.discount-percentage{
+    font-size: 20px;
+    margin-top: 10px;
+    color: blue;
+}
+.discounted-price{
+    color: green;
+    font-size: 25px;
+    margin-top: 10px;
+}

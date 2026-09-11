@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/user_details.css">
+    <link rel="stylesheet" href="/navbar.css">
+</head>
+
+<body>
+    {{>admin_header_new}}
+
+    <div id="container">
+        <h1>Full Details</h1>
+        <div id="box">
+            <input type="text" name="_id" placeholder="name" readonly value="ID:   {{indi._id}}" class="input">
+            <input type="text" name="name" placeholder="name" readonly value="Name:   {{indi.name}}" class="input">
+            <input type="text" name="email" placeholder="email" readonly value="Email:   {{indi.email}}" class="input">
+            <input type="text" name="contactNo" placeholder="Contact Number" readonly
+                value="Contact Number:   {{indi.contactNo}}" class="input">
+
+            <div class="addr">Address</div>
+            <input type="text" name="street" placeholder="Street" readonly value="Street:   {{indi.address.street}}"
+                class="input">
+            <input type="text" name="city" placeholder="City" readonly value=" City:   {{indi.address.city}}"
+                class="input">
+            <input type="text" name="state" placeholder="State" readonly value="State:   {{indi.address.state}}"
+                class="input">
+            <input type="text" name="zipcode" placeholder="zipcode" readonly value="Zipcode:   {{indi.address.zipcode}}"
+                class="input">
+            <textarea name="fullAddr" placeholder="Full address" readonly
+                class="fullAddr">Full Address:   {{indi.address.fullAddr}}</textarea>
+
+            <button class="active_btn" data-user-id="{{indi._id}}">
+                <form action="/user/{{indi._id}}?_method=PUT" method="POST">
+                    <input type="submit" class="active_{{indi.active}}">
+                </form>
+            </button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    // Client-side JavaScript
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', async () => {
+            const userId = button.getAttribute('data-user-id');
+            const confirmed = confirm('Do you really want to delete this record?');
+
+            if (confirmed) {
+                try {
+                    // Send a DELETE request to the server to delete the product
+                    const response = await fetch(`/user_delete/${userId}`, {
+                        method: 'DELETE'
+                    });
+                    console.log(response);
+                    console.log(response.ok);
+                    if (response.ok) {
+                        // Product deleted successfully, handle the UI update or redirection
+                        window.location.href = '/user';
+                    } else {
+                        // Handle errors from the server, e.g., product not found
+                        console.error('Error deleting user');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        });
+    });
+
+
+    //console.log(document.getElementsByClassName("active_true").length)
+    if (document.getElementsByClassName("active_true").length != 0) {
+        document.getElementsByClassName("active_true")[0].value = "Make Inactive";
+    }
+    else if (document.getElementsByClassName("active_true").length == 0) {
+        document.getElementsByClassName("active_false")[0].value = "Make Active";
+    }
+
+
+</script>
+
+<script src="/script/footer_position.js"></script>
+
+</html>

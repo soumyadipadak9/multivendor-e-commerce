@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Product</title>
+    {{!-- <link rel="stylesheet" href="/admin_home.css"> --}}
+    <link rel="stylesheet" href="/pending_product_details.css">
+    <link rel="stylesheet" href="/similar_products.css">
+    <link rel="stylesheet" href="/navbar.css">
+</head>
+
+<body>
+
+    {{>seller_header}}
+
+    <div class="container">
+        <div class="right-box">
+            <div class="main-image-box">
+                <img src="{{product_details.productImage}}" id="mainImage" class="main-image">
+            </div>
+
+        </div>
+        <div class="detail-box">
+            {{!-- <h1 class="productName">{{product_details.productName}}</h1>
+            <p class="stock">{{product_details.stock}}</p>
+            <div class="mrp price">
+                <p><del>₹ {{product_details.price}}</del> ( {{product_details.discountPercentage}}% off )</p>
+            </div>
+            <h2 class="price">₹ {{product_details.discountedPrice}}/-</h2>
+
+            <input type="text" name="pID" value="{{product_details._id}}" style="display: none;">
+
+            </p>
+            <h4 class="description">Product Details :-</h4>
+            <p class="full-description">{{product_details.productDescription}}</p>
+
+            {{#each product_details.customAttributes}}
+            <p class="full-description">{{this.name}}: {{this.value}}</p>
+            {{/each}} --}}
+
+            {{!-- <h4 class="description">Product Name :-</h4> --}}
+            <div>
+                <p class="productName"><b>Product Name:- </b>{{product_details.productName}}</p>
+            </div>
+
+            {{!-- <h4 class="description">Product Category :-</h4> --}}
+            <div>
+                <p class="productName"><b>Product Category:- </b>{{product_details.productCategory}}</p>
+            </div>
+
+
+            <div>
+                <p class="productName"><b>Seller ID:- </b>{{product_details.sellerID}}</p>
+            </div>
+            {{!-- <p class="stock">{{product_details.stock}}</p> --}}
+            {{!-- <div class="mrp price">
+                <p><del>₹ {{product_details.price}}</del> ( {{product_details.discountPercentage}}% off )</p>
+            </div> --}}
+            {{!-- <h2 class="price">₹ {{product_details.discountedPrice}}/-</h2> --}}
+
+            {{!-- <input type="text" name="pID" value="{{product_details._id}}" style="display: none;">
+
+            </p> --}}
+            <div>
+                <h4 class="description">Product Description :-</h4>
+                <p class="full-description">{{product_details.productDescription}}</p>
+            </div>
+
+            <div>
+                <h4 class="description">Peoduct Details:-</h4>
+                {{#each product_details.customAttributes}}
+                <p class="full-description">{{this.name}}: {{this.value}}</p>
+                {{/each}}
+            </div>
+
+            <div>
+                <p class="productName"><b>Status:- </b>{{product_details.status}}</p>
+            </div>
+
+            <div>
+                <h4 class="description">Message:-</h4>
+                <p class="full-description">{{product_details.message}}</p>
+            </div>
+
+        </div>
+    </div>
+        <button class="updt_btn" onclick="location.href='/update_product/{{product_details._id}}';">Update</button>
+
+</body>
+<script src="/script/pNameCut.js"></script>
+<script src="/script/footer_position.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</html>

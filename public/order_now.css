@@ -1,0 +1,169 @@
+.checkout {
+    width: 100%;
+}
+
+
+.container {
+    display: flex;
+}
+
+.box {
+    border: 2px solid black;
+}
+
+
+.dc {
+    display: flex;
+}
+
+.input {
+    border-left: 70px solid aqua;
+}
+
+.int {
+    border-left: 150px solid aqua;
+}
+
+.tot {
+    border-left: 85px solid aqua;
+}
+
+
+
+
+
+
+.container {
+    border-left: 70px solid white;
+    border-right: 70px solid white;
+}
+
+
+/* jsanckjndj */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.checkout-section {
+    margin-bottom: 20px;
+}
+
+input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"], button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="button"] {
+    background-color: #28a745;
+    margin: 10px 0;
+}
+
+
+
+.osmain {
+    height: 80px;
+    background: #007bff;
+}
+
+.osimage {
+    background: #28a745;
+    height: 75px;
+    width: 75px;
+}
+
+
+
+
+/* Order Summary */
+.product-cart {
+    margin-top: 50px;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    justify-content: space-evenly;
+}
+
+.product-image img {
+    max-width: 100px;
+    height: auto;
+}
+
+.product-details h2 {
+    margin: 0;
+}
+
+.product-details{
+    width: 200px;
+}
+
+.product-price p {
+    width: 50px;
+    text-align: right;
+    margin: 0;
+    margin-left: 20px;
+}
+
+.product-quantity input {
+    width: 40px;
+    height: 10px;
+    /* text-align: center; */
+}
+
+.product-delete button {
+    padding: 5px 10px;
+    background-color: #ff9500;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.product-delete button:hover {
+    background-color: #c82333;
+}
+
+
+
+
+.abcd {
+    height: 20px;
+}
+
+.addr_{
+    margin-top: 10px;
+    margin-bottom: 0;
+}

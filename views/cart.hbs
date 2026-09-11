@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/navbar2.css">
+    <link rel="stylesheet" href="/order_now.css">
+    <style>
+        /* kichuta CSS for layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .left-side {
+            width: 68%;
+        }
+
+        .right-side {
+            width: 24%;
+        }
+
+        .product-details {
+            text-align: left;
+        }
+
+        .product-item a {
+            color: black;
+        }
+
+        #confirmAddressBtn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    {{>header}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <form action="/buy_from_cart" method="post" id="order_form">
+
+        <div class="container">
+            <!-- Left side: Checkout Steps -->
+            <div class="left-side">
+                <h2>Cart Products</h2>
+                <!--- 1st Product-->
+                {{#each cartProducts}}
+
+                <div class="product-item">
+
+                    <input class="input" type="text" name="pID[{{@index}}]" value="{{this._id}}" placeholder="pID"
+                        readonly style="display: none;">
+
+                    <a href="/products/{{this._id}}">
+                        <div class="product-image">
+                            <img src="{{this.productImage}}" alt="Product Image">
+                        </div>
+                    </a>
+                    <a href="/products/{{this._id}}">
+                        <div class="product-details">
+                            <h3>{{this.productName}}</h3>
+                        </div>
+                    </a>
+                    <div class="product-price">
+                        <p class="discountedPrice">{{this.discountedPrice}}</p>
+                    </div>
+                    <div class="product-quantity">
+                        <button type="button" onclick="minus(event)">-</button>
+                        <input type="number" class="quantity" name="quantity[{{@index}}]" value=1 min="1"
+                            max="{{this.stock}}" readonly>
+                        <button type="button" onclick="plus(event)">+</button>
+                    </div>
+                    <div class="product-delete">
+                        <button type="button" data-product-id="{{this._id}}" onclick="remove_pr(event)">Remove</button>
+                    </div>
+                </div>
+                {{/each}}
+
+                <!-- confirm order  button -->
+                <button type="submit" id="confirmAddressBtn">Place Order</button>
+            </div>
+
+
+
+            <!-- Right side: Price Details -->
+            <div class="right-side">
+                <h2>Price Details</h2>
+                <!-- Add price details here -->
+                <hr>
+                <p class="items">Total Items: 2</p>
+                <p class="price">Price: 00.00</p>
+                <p>Delivery Charges: 00.00</p>
+                <hr>
+                <h3 class="total">Total Payable: 00.00</h3>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+    </form>
+</body>
+
+<script>
+    //document.getElementById("buynowbtn")
+    //document.getElementById("total").value = document.getElementById("buying").value * document.getElementById("quantity").value;
+    //function chng() {
+    //    document.getElementById("total").value = document.getElementById("buying").value * //document.getElementById("quantity").value;
+    //}
+
+    cart_sammary();
+
+
+    function minus(e) {
+        console.log(e);
+        var quantityInput = e.target.parentElement.querySelector('.quantity');
+        //console.log(quantityInput.getAttribute("max"));
+        if(quantityInput.value>1){
+        quantityInput.value = parseInt(quantityInput.value) - 1;
+        }
+        cart_sammary();
+    }
+
+    function plus(e) {
+        console.log(e);
+        var quantityInput = e.target.parentElement.querySelector('.quantity');
+        if(quantityInput.value<parseInt(quantityInput.getAttribute("max"))){
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+        cart_sammary();
+    }
+
+    async function remove_pr(e) {
+        try {
+            const productId = e.target.getAttribute('data-product-id');
+            //console.log(productId)
+
+            // Send a DELETE request to the server to delete the product
+            const response = await fetch(`/cart_product_delete/${productId}`, {
+                method: 'PUT'
+            });
+            console.log(response);
+            console.log(response.ok);
+            if (response.ok) {
+                const productItem = e.target.closest('.product-item');
+                if (productItem) {
+                    productItem.remove(); // Remove the product item from the UI
+                    cart_sammary();
+                }
+                console.log("Data deleted");
+                console.log("Product deleted successfully");
+
+            } else {
+                // Handle errors from the server, e.g., product not found
+                console.error('Error deleting product');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    
+    
+    
+    function cart_sammary() {
+
+        //console.log(document.getElementsByClassName("product-item"));
+        //console.log(document.getElementsByClassName("discountedPrice"));
+        //console.log(document.getElementsByClassName("quantity"));
+        //console.log(document.getElementsByClassName("items"));
+        //console.log(document.getElementsByClassName("price"));
+        //console.log(document.getElementsByClassName("total"));
+
+        let product_item = document.getElementsByClassName("product-item");
+        let discountedPrice = document.getElementsByClassName("discountedPrice");
+        let quantity = document.getElementsByClassName("quantity");
+        let price = document.getElementsByClassName("price");
+        let items = document.getElementsByClassName("items");
+        let total = document.getElementsByClassName("total");
+
+        var total_price = 0;
+        var total_items = 0;
+
+        for (let i = 0; i < product_item.length; i++) {
+            total_price += (discountedPrice[i].innerText) * (quantity[i].value);
+            total_items += parseInt(quantity[i].value);
+            console.log(total_price)
+            console.log(total_items)
+        }
+
+        price[0].innerText = `Price: ${total_price}.00`;
+        total[0].innerText = `Total Payable: ${total_price}.00`;
+        items[0].innerText = `Total Items: ${total_items}`;
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="/home.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/poster.css">
+    <link rel="stylesheet" href="/footer.css">
+    <style>
+        .star2 {
+            display: inline-block;
+            padding: 2px;
+            font-size: 30px;
+            border-radius: 5px;
+            /* background-color: green; */
+            color: rgb(212, 212, 212);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    {{>header}}
+
+    {{!-- <h1 class="welcome">Hi {{nam}}, Welcome to Zmart.</h1> --}}
+
+    <!-- poster -->
+    <div class="poster">
+        <img class="poster-img" src="/image/banner3.jpg">
+    </div>
+
+
+
+    <!-- Home Page 1st line -->
+    <div class="first-list">
+
+        <a href="/category/Mobile">
+            <div class="box">
+                <h2 class="category_name">Mobile</h2>
+                <div class="box-ing">
+                    <img src="/image/Category image/Mobile.jpg" width="319px" height="250px">
+                </div>
+                <p class="shop_now">Shop Now</p>
+            </div>
+        </a>
+
+        <a href="/category/Laptop">
+            <div class="box">
+                <h2 class="category_name">Laptop</h2>
+                <div class="box-ing">
+                    <img src="/image/Category image/Laptop.jpg" width="319px" height="250px">
+                </div>
+                <p class="shop_now">Shop Now</p>
+            </div>
+        </a>
+
+        <a href="/category/Men Fashion">
+            <div class="box">
+                <h2 class="category_name">Men Fashion</h2>
+                <div class="box-ing">
+                    <img src="/image/Category image/Men fashion.jpg" width="319px" height="250px">
+                </div>
+                <p class="shop_now">Shop Now</p>
+            </div>
+        </a>
+
+        <a href="/category/Women Fashion">
+            <div class="box">
+                <h2 class="category_name">Women Fashion</h2>
+                <div class="box-ing">
+                    <img src="/image/Category image/Women fashion.jpg" width="319px" height="250px">
+                </div>
+                <p class="shop_now">Shop Now</p>
+            </div>
+        </a>
+
+        <a href="/category/E-accessories">
+            <div class="box">
+                <h2 class="category_name">E-accessories</h2>
+                <div class="box-ing">
+                    <img src="/image/Category image/E-accessories.jpg" width="319px" height="250px">
+                </div>
+                <p class="shop_now">Shop Now</p>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- Home Page 3rd line -->
+    <div class="product_container">
+        <div class="third-line">
+            <div class="box2">
+                <h2> Great Savings: Shop On Biggest Discounts</h2>
+            </div>
+        </div>
+
+        <div class="fourth-box">
+            {{#each most_discounts}}
+            <a href="/products/{{this._id}}" class="p-box">
+                <div class="fourth-box-box">
+                    <div class="fourth-box-content">
+                        <img class="fourth-box-img" src="{{this.productImage}}">
+                        <p class="fourth-box-p"><strong class="pName">{{this.productName}}</strong></p>
+                        <p class="star_ratings" product_id="{{this._id}}">
+                            <span class="star2" data-value="1">&#9733;</span>
+                            <span class="star2" data-value="2">&#9733;</span>
+                            <span class="star2" data-value="3">&#9733;</span>
+                            <span class="star2" data-value="4">&#9733;</span>
+                            <span class="star2" data-value="5">&#9733;</span>
+                        </p>
+                        <div class="fourth-box-detainls">
+                            <p class="product-price">₹{{this.price}}</p>
+                            <p class="discount-percentage">{{this.discountPercentage}}% off</p>
+                            <p class="discounted-price">₹{{this.discountedPrice}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+
+    <!-- Home Page 3rd line -->
+    <div class="product_container">
+        <div class="third-line">
+            <div class="box2">
+                <h2> Recently Added: Explore Latest Collections</h2>
+            </div>
+        </div>
+
+        <div class="fourth-box">
+            {{#each latest_products}}
+            <a href="/products/{{this._id}}" class="p-box">
+                <div class="fourth-box-box">
+                    <div class="fourth-box-content">
+                        <img class="fourth-box-img" src="{{this.productImage}}">
+                        <p class="fourth-box-p"><strong class="pName">{{this.productName}}</strong></p>
+                        <p class="star_ratings" product_id="{{this._id}}">
+                            <span class="star2" data-value="1">&#9733;</span>
+                            <span class="star2" data-value="2">&#9733;</span>
+                            <span class="star2" data-value="3">&#9733;</span>
+                            <span class="star2" data-value="4">&#9733;</span>
+                            <span class="star2" data-value="5">&#9733;</span>
+                        </p>
+                        <div class="fourth-box-detainls">
+                            <p class="product-price">₹{{this.price}}</p>
+                            <p class="discount-percentage">{{this.discountPercentage}}% off</p>
+                            <p class="discounted-price">₹{{this.discountedPrice}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+
+    <!-- Home Page 3rd line -->
+    <div class="product_container">
+        <div class="third-line">
+            <div class="box2">
+                <h2> Suggest for you</h2>
+            </div>
+        </div>
+
+        <div class="fourth-box">
+            {{#each suggested_items}}
+            <a href="/products/{{this._id}}" class="p-box">
+                <div class="fourth-box-box">
+                    <div class="fourth-box-content">
+                        <img class="fourth-box-img" src="{{this.productImage}}">
+                        <p class="fourth-box-p"><strong class="pName">{{this.productName}}</strong></p>
+                        <p class="star_ratings" product_id="{{this._id}}">
+                            <span class="star2" data-value="1">&#9733;</span>
+                            <span class="star2" data-value="2">&#9733;</span>
+                            <span class="star2" data-value="3">&#9733;</span>
+                            <span class="star2" data-value="4">&#9733;</span>
+                            <span class="star2" data-value="5">&#9733;</span>
+                        </p>
+                        <div class="fourth-box-detainls">
+                            <p class="product-price">₹{{this.price}}</p>
+                            <p class="discount-percentage">{{this.discountPercentage}}% off</p>
+                            <p class="discounted-price">₹{{this.discountedPrice}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+
+
+    <!-- Home Page 3rd line -->
+    <div class="product_container">
+        <div class="third-line">
+            <div class="box2">
+                <h2> Top Rated Products: Discover High-demand Products</h2>
+            </div>
+        </div>
+
+        <div class="fourth-box">
+            {{#each top_rated_items}}
+            <a href="/products/{{this._id}}" class="p-box">
+                <div class="fourth-box-box">
+                    <div class="fourth-box-content">
+                        <img class="fourth-box-img" src="{{this.productImage}}">
+                        <p class="fourth-box-p"><strong class="pName">{{this.productName}}</strong></p>
+                        <p class="star_ratings" product_id="{{this._id}}">
+                            <span class="star2" data-value="1">&#9733;</span>
+                            <span class="star2" data-value="2">&#9733;</span>
+                            <span class="star2" data-value="3">&#9733;</span>
+                            <span class="star2" data-value="4">&#9733;</span>
+                            <span class="star2" data-value="5">&#9733;</span>
+                        </p>
+                        <div class="fourth-box-detainls">
+                            <p class="product-price">₹{{this.price}}</p>
+                            <p class="discount-percentage">{{this.discountPercentage}}% off</p>
+                            <p class="discounted-price">₹{{this.discountedPrice}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+
+
+    {{>footer}}
+</body>
+<script src="/script/pNameCut.js"></script>
+<script src="/script/footer_position.js"></script>
+<script src="/script/star_ratings_products.js"></script>
+
+</html>

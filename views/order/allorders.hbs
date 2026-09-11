@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All order</title>
+    <link rel="stylesheet" href="/admin_product_list.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <style>
+        td img {
+            max-width: 90px;
+            margin: auto;
+        }
+        .status,.progress-date,.OId{
+            margin: 5px 0;
+            text-align: center;
+        }
+        .pName{
+            max-width: 330px;
+        }
+    </style>
+</head>
+
+<body>
+    {{>header}}
+
+    <div class="container">
+        <h1 class="page-title">All Orders</h1>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Product Image</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Product Category</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    {{!-- <th>Order ID</th> --}}
+                    <th>Order Status</th>
+                    <th colspan=3>Action</th>
+                </tr>
+            </thead>
+
+            <tbody class="order_data">
+                {{#each allorders}}
+                {{#each this.products}}
+                <tr class="order_row">
+                    {{!-- <a href="/products/{{this.pID._id}}">
+                        <div class="order">
+                            <span>{{this.pID._id}}</span>
+                            <span>{{this.pID.productName}}</span>
+                        </div>
+                    </a> --}}
+                    <td><img src="{{this.pID.productImage}}" alt=""></td>
+                    <td>{{this.pID._id}}</td>
+                    <td class="pName">{{this.pID.productName}}</td>
+                    <td>{{this.pID.productCategory}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{this.BuyingPrice}}</td>
+
+                    {{!-- {{#each this.processOrder}}
+                    <td>{{this.Status}} <br>{{this.Date}}</td>
+                    {{/each}} --}}
+
+                    {{!-- <td>{{this.processOrder[0]}}</td> --}}
+
+                    {{!-- <td>{{this.processOrder}}</td> --}}
+
+                    <td class="order_status">
+                        {{#each this.processOrder}}
+                        {{#if @last}}
+                        <p class="status">{{this.Status}}</p>
+                        <p class="progress-date">{{this.Date}}</p>
+                        {{!-- <p class="OId">{{this._id}}</p> --}}
+                        {{/if}}
+                        {{/each}}
+                    </td>
+
+
+
+
+                    <td><a href="/orderDetails/{{this._id}}"><button
+                                class="action-button details-button">Details</button></a></td>
+
+                </tr>
+                {{/each}}
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+
+
+</body>
+
+<script>
+    const order_data = document.getElementsByClassName("order_data");
+
+    for (let i = 0; i < order_data.length; i++) {
+        const children = order_data[i].children;
+        const childrenArray = Array.from(children);
+        childrenArray.reverse();
+        for (let j = 0; j < childrenArray.length; j++) {
+            order_data[i].appendChild(childrenArray[j]);
+        }
+    }
+
+
+
+
+    const status=document.getElementsByClassName("status");
+    for(let i=0;i<status.length;i++){
+        if(status[i].innerText=="Order placed"){
+            status[i].style.color="red";
+            status[i].style.fontWeight="bolder";
+            status[i].style.fontSize="20px";
+        }
+        else if(status[i].innerText=="Shipped"){
+            status[i].style.color="orange";
+            status[i].style.fontWeight="bolder";
+            status[i].style.fontSize="20px";
+        }
+        else if(status[i].innerText=="Delivered"){
+            status[i].style.color="green";
+            status[i].style.fontWeight="bolder";
+            status[i].style.fontSize="20px";
+        }
+    }
+
+
+    const progress_date = document.getElementsByClassName("progress-date");
+    for (let i = 0; i < progress_date.length; i++) {
+      let newDt = new Date(progress_date[i].innerText);
+      if (newDt != 'Invalid Date') {
+        if (newDt.getHours() > 0 && newDt.getHours() < 12) {
+          var hour = newDt.getHours();
+          var ap = "AM";
+        }
+        else if (newDt.getHours() == 0) {
+          var hour = newDt.getHours() + 12;
+          var ap = "AM";
+        }
+        else if (newDt.getHours() == 12) {
+          var hour = newDt.getHours();
+          var ap = "PM";
+        }
+        else if (newDt.getHours() > 12 && newDt.getHours() < 24) {
+          var hour = newDt.getHours() - 12;
+          var ap = "PM";
+        }
+
+        if (newDt.getMonth() == 0) {
+          var month = "Jan"
+        }
+        else if (newDt.getMonth() == 1) {
+          var month = "Feb"
+        }
+        else if (newDt.getMonth() == 2) {
+          var month = "Mar"
+        }
+        else if (newDt.getMonth() == 3) {
+          var month = "Apr"
+        }
+        else if (newDt.getMonth() == 4) {
+          var month = "May"
+        }
+        else if (newDt.getMonth() == 5) {
+          var month = "Jun"
+        }
+        else if (newDt.getMonth() == 6) {
+          var month = "Jul"
+        }
+        else if (newDt.getMonth() == 7) {
+          var month = "Aug"
+        }
+        else if (newDt.getMonth() == 8) {
+          var month = "Sep"
+        }
+        else if (newDt.getMonth() == 9) {
+          var month = "Oct"
+        }
+        else if (newDt.getMonth() == 10) {
+          var month = "Nov"
+        }
+        else if (newDt.getMonth() == 11) {
+          var month = "Dec"
+        }
+
+        console.log(newDt);
+        progress_date[i].innerText = `${hour}:${newDt.getMinutes()} ${ap}, ${month} ${newDt.getDate()}, ${newDt.getFullYear()}`;
+      }
+    }
+
+</script>
+
+</html>

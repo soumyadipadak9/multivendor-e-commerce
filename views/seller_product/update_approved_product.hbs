@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product update</title>
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/product_update.css">
+    <link rel="stylesheet" href="/navbar.css">
+</head>
+
+<body>
+
+    {{>seller_header}}
+
+
+    <div id="container">
+        <h1 class="h1">Update product</h1>
+        <form action="/approved_product_update/{{_id}}?_method=PUT" method="POST" id="box">
+
+            {{!-- <p>Product ID:</p>
+            <textarea name="productID" class="input" id="productID" readonly>{{_id}}</textarea> --}}
+
+            <p>Product Name:</p>
+            <textarea name="productName" class="input" id="productName" required
+                maxlength="300" readonly>{{productName}}</textarea>
+
+
+            {{!-- <p>Product Description:</p>
+            <textarea name="productDescription" value="{{productDescription}}" class="input" id="productDescription"
+                required maxlength="1000">{{productDescription}}</textarea> --}}
+
+            {{!-- <p>Existing Image URL:</p>
+            <textarea name="productImage" class="input" id="productImage" readonly>{{productImage}}</textarea> --}}
+
+            {{!-- <p>Product Category:</p>
+            <select name="productCategory" id="productCategory" onchange="changeCategory()">
+                <option value="{{productCategory}}">{{productCategory}}</option>
+                {{#each distinctCategories}}
+                <option value="{{this.categoryName}}">{{this.categoryName}}</option>
+                {{/each}}
+            </select> --}}
+
+            {{!-- <p id="newCategory" style="display: none">New Category:</p>
+            <textarea class="input" id="productCategory2" style="display: none"></textarea> --}}
+
+
+            {{!-- <div id="custom-attributes">
+                {{#each features}}
+                <div class="features">
+                    <input type='text' placeholder='Attribute Name' value="{{this.name}}"
+                        name="customAttributes[{{@index}}][name]">
+                    <input type='text' placeholder='Attribute Value' value="{{this.value}}"
+                        name="customAttributes[{{@index}}][value]">
+                </div>
+                {{/each}}
+            </div> --}}
+            {{!-- <button type="button" id="add-attribute">Add Attribute</button> --}}
+
+
+            <p>Stock:</p>
+            <input type="number" name="stock" class="input" id="stock" required min="0" max="1000" value="{{stock}}">
+
+            <p>Threshold Stock:</p>
+            <input type="number" name="threshold" class="input" id="threshold" required min="0" max="1000" value="{{threshold}}">
+
+            <p>MRP Price:</p>
+            <input type="number" name="price" class="input" id="price" required min="0" max="10000000"
+                onkeyup="discount()" value="{{price}}">
+
+            <p>Discounted Price:</p>
+            <input type="number" name="discountedPrice" class="input" id="discountedPrice" min="0" max="10000000"
+                onkeyup="discount()" value="{{discountedPrice}}">
+
+            <p>Discount Percentage:</p>
+            <input type="number" name="discountPercentage" class="input" min="0" max="100" id="discountPercentage"
+                required readonly value="{{discountPercentage}}">
+
+            <input type="submit" id="submit" value="Update product">
+        </form>
+        <p class="err">{{err}}</p>
+    </div>
+</body>
+
+<script>
+    function discount() {
+        const price1 = parseFloat(document.getElementById('price').value);
+        const discountedPrice1 = parseFloat(document.getElementById('discountedPrice').value);
+        const discountPercentage1 = ((price1 - discountedPrice1) / price1) * 100;
+        document.getElementById('discountPercentage').value = Math.round(discountPercentage1);
+    };
+
+
+
+    var productCategory = document.getElementById("productCategory").value;
+    var custom_attr = document.getElementById("custom-attributes").innerHTML;
+    //console.log(productCategory);
+    //console.log(custom_attr);
+
+
+    function changeCategory() {
+        var selectElement = document.getElementById("productCategory");
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        //console.log(selectedOption.value);
+
+        if (selectedOption.value == productCategory) {
+            const customAttributesContainer = document.getElementById('custom-attributes');
+            //console.log(custom_attr);
+            customAttributesContainer.innerHTML = custom_attr;
+            //console.log(custom_attr.innerHTML);
+            //console.log("target")
+        }
+
+        else {
+            var categoryId = selectedOption.value;
+
+            // Fetch custom attributes based on the selected category
+            fetch(`/getCustomAttributes?categoryName=${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const customAttributesContainer = document.getElementById('custom-attributes');
+                    customAttributesContainer.innerHTML = ''; // Clear previous custom attributes
+
+                    // Generate input fields for custom attributes
+                    var i = 0;
+                    data.customAttributes.forEach(attribute => {
+                        const attributeGroup = document.createElement('div');
+                        attributeGroup.setAttribute("class", "features");
+                        attributeGroup.innerHTML = `
+                            
+                            <input type="text" class="name" value="${attribute.name}" name="customAttributes[${i}][name]" class="input" readonly>
+
+                            <input type="text" class="value" name="customAttributes[${i}][value]" class="input">
+                            
+                        `;
+
+
+                        customAttributesContainer.appendChild(attributeGroup);
+                        i++;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching custom attributes:', error);
+                });
+        }
+
+
+
+    }
+
+
+</script>
+<script src="/script/footer_position.js"></script>
+
+</html>

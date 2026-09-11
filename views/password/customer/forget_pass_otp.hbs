@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forget password otp</title>
+    <link rel="stylesheet" href="/signup.css">
+</head>
+
+<body>
+    {{!-- <h1>signup page</h1>
+    <form action="/signup" method="post">
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit">
+    </form> --}}
+
+    <div id="main-container">
+        <div id="container">
+            <h1>Forget Password Otp</h1>
+            <form action="/forget_password_otp" method="post" id="box">
+                <input type="number" name="otp" placeholder="OTP" class="input">
+                <input type="submit" id="submit" value="OTP">
+            </form>
+            {{!-- <a href="/login" id="link">Already have an account? Do login.</a>
+            <p>{{err}}</p> --}}
+        </div>
+    </div>
+</body>
+
+</html>

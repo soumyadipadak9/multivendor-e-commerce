@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Now</title>
+    <link rel="stylesheet" href="/navbar2.css">
+    <link rel="stylesheet" href="/order_now.css">
+    <style>
+        /* kichuta CSS for layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .left-side {
+            width: 68%;
+        }
+
+        .right-side {
+            width: 24%;
+        }
+    </style>
+</head>
+
+<body>
+    {{>header}}
+    
+
+
+
+
+
+
+
+
+
+
+    <form action="/order_now" method="post" id="order_form">
+
+        <div class="container">
+            <!-- Left side: Checkout Steps -->
+            <div class="left-side">
+
+                <h2>Delivery Address</h2>
+                <div class="second">
+                    <p class="addr_">Name:</p>
+                    <input type="text" name="Name" value="{{authUser.name}}" placeholder="Name">
+
+                    <p class="addr_">Contact Number:</p>
+                    <input type="number" name="contactNo" value="{{authUser.contactNo}}" placeholder="Contact Number">
+
+                    <p class="addr_">Street:</p>
+                    <input type="text" name="street" value="{{authUser.address.street}}" placeholder="Street Address">
+
+                    <p class="addr_">City:</p>
+                    <input type="text" name="city" value="{{authUser.address.city}}" placeholder="City">
+
+                    <p class="addr_">State:</p>
+                    <input type="text" name="state" value="{{authUser.address.state}}" placeholder="State">
+
+                    <p class="addr_">Zipcode:</p>
+                    <input type="number" name="zipcode" value="{{authUser.address.zipcode}}" placeholder="Zip Code">
+
+                    <p class="addr_">Full Address:</p>
+                    <input type="text" name="fullAddr" value="{{authUser.address.fullAddr}}" placeholder="Full Address">
+
+                    {{!-- <button type="button" id="confirmAddressBtn" onclick="confirmAddress()">Confirm Address</button> --}}
+                </div>
+
+
+                <hr>
+                <h2>Order Summary</h2>
+                <!--- 1st Product-->
+                {{!-- {{#each buyProducts}} --}}
+                <div class="product-item">
+
+                    <input class="input" type="text" name="pID" value="{{pid}}" placeholder="pID" readonly
+                    style="display: none;">
+
+                    <div class="product-image">
+                        <img src="{{productImage}}" alt="Product Image">
+                    </div>
+                    <div class="product-details">
+                        <h3>{{pName}}</h3>
+                    </div>
+                    <div class="product-price">
+                        <p class="discountedPrice">{{BuyingPrice}}</p>
+                    </div>
+                    <div class="product-quantity">
+                        <button type="button" onclick="minus(event)">-</button>
+                        <input type="number" name="quantity" class="quantity" value=1 min=1 max={{stock}} readonly>
+                        <button type="button" onclick="plus(event)">+</button>
+                    </div>
+                    {{!-- <div class="product-delete">
+                        <button type="button">Remove</button>
+                    </div> --}}
+                </div>
+                {{!-- {{/each}} --}}
+
+                <!-- confirm order summary button -->
+                {{!-- <button type="button" id="confirmAddressBtn" onclick="confirmAddress()">Confirm Product</button> --}}
+                <hr>
+
+
+
+                <h2>Payment Option</h2>
+                <input type="radio" name="payment-option" value="offline" checked>
+                <label for="online">Cash on Delivery</label><br>
+                <div class="abcd"></div>
+                <!-- confirm order  button -->
+                <button type="submit" id="confirmAddressBtn">Confirm Order</button>
+            </div>
+
+
+
+            <!-- Right side: Price Details -->
+            <div class="right-side">
+                <h2>Price Details</h2>
+                <!-- Add price details here -->
+                <hr>
+                <p class="items">Total Items: 2</p>
+                <p class="price">Price: 00.00</p>
+                <p>Delivery Charges: 00.00</p>
+                <hr>
+                <h3 class="total">Total Payable: 00.00</h3>
+            </div>
+
+
+
+
+
+
+        </div>
+    </form>
+</body>
+
+<script>
+    //document.getElementById("buynowbtn")
+    //document.getElementById("total").value=document.getElementById("buying").value * document.//getElementById("quantity").value;
+    //function chng(){
+    //    document.getElementById("total").value=document.getElementById("buying").value * //document.getElementById("quantity").value;
+    //}
+
+
+
+    cart_sammary();
+
+    function minus(e) {
+        console.log(e);
+        var quantityInput = e.target.parentElement.querySelector('.quantity');
+        //console.log(quantityInput.getAttribute("max"));
+        if(quantityInput.value>1){
+        quantityInput.value = parseInt(quantityInput.value) - 1;
+        }
+        cart_sammary();
+    }
+
+    function plus(e) {
+        console.log(e);
+        var quantityInput = e.target.parentElement.querySelector('.quantity');
+        if(quantityInput.value<parseInt(quantityInput.getAttribute("max"))){
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+        cart_sammary();
+    }
+
+    //function buynow(){
+        //console.log("kkfjdfj")
+        //document.getElementById("order_form").preventDefault()
+        //document.querySelector(.first).style.display='none';
+        //document.getElementsByClassName("first")[0].style.display='none'  
+    //}
+
+
+
+
+
+    function cart_sammary() {
+
+        //console.log(document.getElementsByClassName("product-item"));
+        //console.log(document.getElementsByClassName("discountedPrice"));
+        //console.log(document.getElementsByClassName("quantity"));
+        //console.log(document.getElementsByClassName("items"));
+        //console.log(document.getElementsByClassName("price"));
+        //console.log(document.getElementsByClassName("total"));
+
+        let product_item = document.getElementsByClassName("product-item");
+        let discountedPrice = document.getElementsByClassName("discountedPrice");
+        let quantity = document.getElementsByClassName("quantity");
+        let price = document.getElementsByClassName("price");
+        let items = document.getElementsByClassName("items");
+        let total = document.getElementsByClassName("total");
+
+        var total_price = 0;
+        var total_items = 0;
+
+        for (let i = 0; i < product_item.length; i++) {
+            total_price += (discountedPrice[i].innerText) * (quantity[i].value);
+            total_items += parseInt(quantity[i].value);
+            console.log(total_price)
+            console.log(total_items)
+        }
+
+        price[0].innerText = `Price: ${total_price}.00`;
+        total[0].innerText = `Total Payable: ${total_price}.00`;
+        items[0].innerText = `Total Items: ${total_items}`;
+    }
+</script>
+
+</html>

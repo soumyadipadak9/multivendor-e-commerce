@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirm</title>
+  <link rel="stylesheet" href="/navbar2.css">
+  <link rel="stylesheet" href="/order_confirm.css">
+  <link rel="stylesheet" href="/footer.css">
+</head>
+
+<body>
+  {{>seller_header}}
+  <main>
+
+
+    {{!-- <div class="thank">Thank you for your order! Your order has been confirmed and will be processed shortly.</div> --}}
+    <div class="order-id">Order ID: {{obj._id}}</div>
+
+    <div class="container-1">
+      <div class="product-info">
+        <!-- Product  -->
+        <div class="product">
+          <div class="product-image">
+            <a href="/product_details/{{obj.products.pID._id}}">
+              <img src="{{obj.products.pID.productImage}}" alt="Product Image" class="image">
+            </a>
+          </div>
+          <div class="product-info">
+            <a href="/product_details/{{obj.products.pID._id}}">
+              <h2 class="product_name">{{obj.products.pID.productName}}</h2>
+            </a>
+            <h3 class="quantity">Quantity: {{obj.products.quantity}}</h3>
+            <h3 class="price">Total: {{obj.products.Total}}</h3>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="delivery-details">
+        <div class="progress-bar">
+          <div class="progress-item confirmed">
+            <span class="progress-text">{{process_order.Status1}}</span>
+            <span class="progress-date">{{process_order.Date1}}</span>
+          </div>
+          <div class="progress-item shipped">
+            <span class="progress-text">{{process_order.Status2}}</span>
+            <span class="progress-date">{{process_order.Date2}}</span>
+          </div>
+          {{!-- <div class="progress-item out-for-delivery">
+            <span class="progress-text">Out for Delivery</span>
+            <span class="progress-date">April 9, 2024</span>
+          </div> --}}
+          <div class="progress-item delivered">
+            <span class="progress-text">{{process_order.Status3}}</span>
+            <span class="progress-date">{{process_order.Date3}}</span>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+    <hr>
+    <!-- Delivery Address -->
+    <div class="delivery-address">
+      <h2>Delivery Address</h2>
+      <p>Name: {{obj.shippingDetails.Name}} | Contact Number: {{obj.shippingDetails.contactNo}} | Street/Villege:
+        {{obj.shippingDetails.street}} | City/Locality: {{obj.shippingDetails.city}} | State:
+        {{obj.shippingDetails.state}} | Zip code: {{obj.shippingDetails.zipcode}}</p>
+      <p>Full Address: {{obj.shippingDetails.fullAddr}}</p>
+    </div>
+
+    <hr>
+    <div class="button_line">
+      <!-- Cancel Button -->
+      <button type="button" id="processOrder" onclick="processOrder()"></button>
+
+      {{!-- <a>
+        <img src="file:///D:/PROJECTS/New%20folder%20(2)/c%20order%20page/download-solid.svg" c alt="Product Image"
+          class="download">
+      </a> --}}
+
+    </div>
+
+
+  </main>
+
+
+
+  {{>footer}}
+
+  <script src="/script/footer_position.js"></script>
+
+  <script>
+    // Retrieve the order ID from the current URL
+    const orderId = window.location.pathname.split('seller_orderDetails/').pop(); // Extracts the last part of the URL (order ID)
+    console.log(orderId);
+
+    fetch(`/seller_processOrder/${orderId}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.current_order_status);
+
+        if (data.current_order_status.Status == "Order placed") {
+          document.getElementById("processOrder").innerText = "Shipped";
+        }
+        else if (data.current_order_status.Status == "Shipped") {
+          document.getElementById("processOrder").style.display = "none";
+          //document.getElementById("processOrder").innerText="XYZ";
+        }
+        else if (data.current_order_status.Status == "Delivered") {
+          document.getElementById("processOrder").style.display = "none";
+          //document.getElementById("processOrder").innerText="XYZ";
+        }
+      })
+      .catch(error => {
+        console.log('Error:', error);
+      });
+
+
+    async function processOrder() {
+      try {
+        // Send a DELETE request to the server to delete the product
+        const response = await fetch(`/seller_processOrder/${orderId}`, {
+          method: 'PUT'
+        });
+        console.log(response);
+        console.log(response.ok);
+        if (response.ok) {
+          // Product deleted successfully, handle the UI update or redirection
+          //window.location.href = '/seller/seller_product_list';
+          //console.log("Data deleted");
+          //javascript to remove element
+
+          //const tr = button.closest('tr');
+          //if (tr) {
+          //  tr.remove();
+          //}
+
+
+          console.log("Order status updated successfully");
+          document.getElementById("processOrder").style.display = "none";
+
+        } else {
+          // Handle errors from the server, e.g., product not found
+          console.error('Error deleting product');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+
+
+
+
+
+
+  //***************************** process date and time*************************
+  const progress_date = document.getElementsByClassName("progress-date");
+    for (let i = 0; i < progress_date.length; i++) {
+      let newDt = new Date(progress_date[i].innerText);
+      if (newDt != 'Invalid Date') {
+        if (newDt.getHours() > 0 && newDt.getHours() < 12) {
+          var hour = newDt.getHours();
+          var ap = "AM";
+        }
+        else if (newDt.getHours() == 0) {
+          var hour = newDt.getHours() + 12;
+          var ap = "AM";
+        }
+        else if (newDt.getHours() == 12) {
+          var hour = newDt.getHours();
+          var ap = "PM";
+        }
+        else if (newDt.getHours() > 12 && newDt.getHours() < 24) {
+          var hour = newDt.getHours() - 12;
+          var ap = "PM";
+        }
+
+        if (newDt.getMonth() == 0) {
+          var month = "Jan"
+        }
+        else if (newDt.getMonth() == 1) {
+          var month = "Feb"
+        }
+        else if (newDt.getMonth() == 2) {
+          var month = "Mar"
+        }
+        else if (newDt.getMonth() == 3) {
+          var month = "Apr"
+        }
+        else if (newDt.getMonth() == 4) {
+          var month = "May"
+        }
+        else if (newDt.getMonth() == 5) {
+          var month = "Jun"
+        }
+        else if (newDt.getMonth() == 6) {
+          var month = "Jul"
+        }
+        else if (newDt.getMonth() == 7) {
+          var month = "Aug"
+        }
+        else if (newDt.getMonth() == 8) {
+          var month = "Sep"
+        }
+        else if (newDt.getMonth() == 9) {
+          var month = "Oct"
+        }
+        else if (newDt.getMonth() == 10) {
+          var month = "Nov"
+        }
+        else if (newDt.getMonth() == 11) {
+          var month = "Dec"
+        }
+
+        console.log(newDt);
+        progress_date[i].innerText = `${hour}:${newDt.getMinutes()} ${ap}, ${month} ${newDt.getDate()}, ${newDt.getFullYear()}`;
+      }
+    }
+  </script>
+</body>
+
+</html>

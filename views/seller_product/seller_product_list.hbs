@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="/seller_product_list.css">
+    <link rel="stylesheet" href="/admin_product_list.css">
+    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <style>
+        .Approved {
+            color: green;
+            font-weight: bolder;
+        }
+
+        .Pending {
+            color: orange;
+            font-weight: bolder;
+        }
+
+        .Rejected {
+            color: red;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    {{>seller_header}}
+    <div class="container1">
+
+        <div class="box" onclick="location.href='/seller/approved_product_list';">
+            {{!-- <img src="product_logo.png" alt="Logo"> --}}
+            <h3>Approved Products</h3>
+            <p>Total: {{approved_products_length}}</p>
+        </div>
+
+        <div class="box" onclick="location.href='/seller/pending_product_list';">
+            {{!-- <img src="user_logo.png" alt="Logo"> --}}
+            <h3>Pending Products</h3>
+            <p>Total: {{pending_products_length}}</p>
+        </div>
+
+        <div class="box" onclick="location.href='/seller/rejected_product_list';">
+            {{!-- <img src="seller_logo.png" alt="Logo"> --}}
+            <h3>Rejected Products</h3>
+            <p>Total: {{rejected_products_length}}</p>
+        </div>
+
+    </div>
+
+    <div id="search">
+        <input type="text" placeholder="Search Product" class="search" onkeyup="keyup()">
+    </div>
+    <div class="container">
+        <h1 class="page-title">Products List</h1>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    {{!-- <th>Seller id</th> --}}
+                    <th>Product id</th>
+                    <th>Product name</th>
+                    <th>Product category</th>
+                    <th>MRP</th>
+                    <th>Selling Price</th>
+                    <th>Stock</th>
+                    <th>Threshold limit</th>
+                    <th>Status</th>
+                    <th colspan=3>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each items}}
+                <tr>
+                    {{!-- <td>{{this.sellerID}}</td> --}}
+                    <td class="pID">{{this._id}}</td>
+                    <td class="product_name">{{this.productName}}</td>
+                    <td class="category">{{this.productCategory}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.discountedPrice}}</td>
+                    <td>{{this.stock}}</td>
+                    <td>{{this.threshold}}</td>
+                    <td class="{{this.status}}">{{this.status}}</td>
+                    <td><a href="/update_product/{{this._id}}"><button
+                                class="action-button update-button">Update</button></a></td>
+
+                    <td><button class="action-button delete-button" data-product-id="{{this._id}}">Delete</button></td>
+
+                    <td><a href="/product_details/{{this._id}}"><button
+                                class="action-button details-button">Details</button></a></td>
+
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </div>
+
+    {{>footer}}
+</body>
+<script>
+    // Client-side JavaScript
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', async () => {
+            const productId = button.getAttribute('data-product-id');
+            const confirmed = confirm('Do you really want to delete this record?');
+
+            if (confirmed) {
+                try {
+                    // Send a DELETE request to the server to delete the product
+                    const response = await fetch(`/product_delete/${productId}`, {
+                        method: 'DELETE'
+                    });
+                    console.log(response);
+                    console.log(response.ok);
+                    if (response.ok) {
+                        // Product deleted successfully, handle the UI update or redirection
+                        //window.location.href = '/seller/seller_product_list';
+                        console.log("Data deleted");
+                        //javascript to remove element
+
+                        const tr = button.closest('tr');
+                        if (tr) {
+                            tr.remove();
+                        }
+                        console.log("Product deleted successfully");
+
+                    } else {
+                        // Handle errors from the server, e.g., product not found
+                        console.error('Error deleting product');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        });
+    });
+
+
+    function keyup() {
+        var s = document.getElementsByClassName('search')[0].value.toUpperCase()
+        var len = s.length
+        // console.log(len)
+        let pName = document.getElementsByClassName('product_name');
+        let CategoryName = document.getElementsByClassName('category');
+        let pID = document.getElementsByClassName('pID');
+
+        for (let i = 0; i < pName.length; i++) {
+            if (pName[i].innerText.toUpperCase().indexOf(s) != -1 || CategoryName[i].innerText.toUpperCase().indexOf(s) != -1 || pID[i].innerText.toUpperCase().indexOf(s) != -1) {
+                pName[i].parentElement.style.display = ''
+            }
+            else {
+                pName[i].parentElement.style.display = 'none'
+            }
+        }
+    }
+
+</script>
+<script src="/script/footer_position.js"></script>
+
+</html>

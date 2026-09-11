@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sellerSignup</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/EditProfile.css">
+</head>
+
+<body>
+    {{>seller_header}}
+
+    <div id="main-container">
+        <div id="container">
+            <h1>Seller Full Details</h1>
+            <form action="/seller_signup2?_method=PUT" method="post" id="box">
+                <input type="text" name="contactNo" required placeholder="Contact Number" class="input" required
+                    maxlength="10">
+
+                <input type="text" name="storeName" required placeholder="Store Name" class="input" required
+                    maxlength="50">
+
+                <div class="addr">Address</div>
+                <input type="text" name="street1" placeholder="Street" class="input">
+                <input type="text" name="city1" placeholder="City" class="input">
+                <input type="text" name="state1" placeholder="State" class="input">
+                <input type="text" name="zipcode1" placeholder="zipcode" class="input">
+                <textarea name="fullAddr1" placeholder="Full address" class="input"></textarea>
+
+                <div class="addr">Pickup Address</div>
+                <input type="text" name="street2" placeholder="Street" class="input">
+                <input type="text" name="city2" placeholder="City" class="input">
+                <input type="text" name="state2" placeholder="State" class="input">
+                <input type="text" name="zipcode2" placeholder="zipcode" class="input">
+                <textarea name="fullAddr2" placeholder="Full address" class="input"></textarea>
+
+
+
+                <input type="submit" id="submit" value="Submit">
+            </form>
+
+            <p>{{err}}</p>
+        </div>
+    </div>
+</body>
+
+</html>

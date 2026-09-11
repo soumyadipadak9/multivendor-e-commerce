@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adminSignup</title>
+    <link rel="stylesheet" href="/signup.css">
+    <link rel="stylesheet" href="/signup_header.css">
+</head>
+
+<body>
+    {{>signup_header}}
+
+    <div id="main-container">
+    <div id="container">
+        <h1>Admin Sign up</h1>
+        <form action="/adminSignup" method="post" id="box">
+            <input type="text" name="name" required placeholder="Name" class="input" required maxlength="40">
+            <input type="email" required name="email" placeholder="Email" class="input" required maxlength="40">
+            <input type="password" required name="password" placeholder="Password" class="input" required minlength="5" maxlength="10">
+            <input type="password" required name="confirm_password" placeholder="Confirm Password" class="input" required minlength="5" maxlength="10">
+            <input type="submit" id="submit" value="Sign up">
+        </form>
+        <a href="/adminLogin" id="link">Already have an account? Do login.</a>
+        <p>{{err}}</p>
+    </div>
+    </div>
+</body>
+
+</html>

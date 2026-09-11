@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/categoryProduct.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
+    <style>
+        .star2 {
+            display: inline-block;
+            padding: 2px;
+            font-size: 30px;
+            border-radius: 5px;
+            /* background-color: green; */
+            color: rgb(212, 212, 212);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    {{>header}}
+
+    <h2 class="category-heading">Category: {{categoryName}}</h2>
+    <div class="product-grid">
+        {{#each categoryProducts}}
+        <a href="/products/{{this._id}}">
+            <!-- 1st Product -->
+            <div class="product-card">
+                <img src="{{this.productImage}}" alt="Product Image">
+                <div class="product-details">
+                    <p><strong class="pName">{{this.productName}}</strong></p>
+                    <p class="star_ratings" product_id="{{this._id}}">
+                        <span class="star2" data-value="1">&#9733;</span>
+                        <span class="star2" data-value="2">&#9733;</span>
+                        <span class="star2" data-value="3">&#9733;</span>
+                        <span class="star2" data-value="4">&#9733;</span>
+                        <span class="star2" data-value="5">&#9733;</span>
+                    </p>
+                    <p class="product-price">₹{{this.price}}</p>
+                    <p class="discount-percentage">{{this.discountPercentage}}% off</p>
+                    <p class="discounted-price">₹{{this.discountedPrice}}</p>
+                </div>
+            </div>
+        </a>
+        {{/each}}
+    </div>
+
+    {{>footer}}
+</body>
+
+<script src="/script/pNameCut.js"></script>
+<script src="/script/footer_position.js"></script>
+<script src="/script/star_ratings_products.js"></script>
+
+</html>

@@ -1,0 +1,165 @@
+main {
+    border-left: 80px solid white;
+    border-right: 80px solid white;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.container-1 {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    height: 250px;
+    display: flex;
+}
+
+.product-info {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    height: 180px;
+    align-self: center;
+    border-left: 20px solid white;
+}
+
+
+
+.product {
+    display: flex;
+    border-top: 15px solid white;
+}
+
+.product_name {
+  margin-top: 0;
+  width: 1000px;
+  text-align: left;
+}
+
+
+.image {
+    width: 112px;
+    height: 150px;
+    align-self: center;
+}
+
+/* Delivery Details */
+.delivery-details {
+    width: 40%;
+    background-color: rgb(255, 255, 255);
+    height: 180px;
+    border-left: 30px solid white;
+    align-self: center;
+    border-top: 30px solid white;
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .progress-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .progress-item:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    background-color: #ccc;
+    transform: translateY(-50%);
+  }
+  
+  .progress-item.confirmed:before {
+    background-color: #007bff;
+  }
+  
+  .progress-item.shipped:before {
+    background-color: #ffc107;
+  }
+  
+  .progress-item.out-for-delivery:before {
+    background-color: #28a745;
+  }
+  
+  .progress-item.delivered:before {
+    background-color: #dc3545;
+  }
+  
+  .progress-text {
+    font-weight: bold;
+  }
+  
+  .progress-date {
+    color: #4a4a4a;
+  }
+
+
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+  .product-quantity input {
+    width: 35px;
+    height: 25px;
+
+}
+
+
+button[type="button"] {
+    background-color: #28a745;
+
+}
+
+
+.osmain {
+    height: 80px;
+    background: #007bff;
+}
+
+.osimage {
+    background: #28a745;
+    height: 75px;
+    width: 75px;
+}
+
+
+
+input[type="submit"], button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="button"] {
+    background-color: #e49137;
+}
+
+
+.button_line {
+  display: flex;
+  width: 100%;
+  height: 40px;
+}
+
+.download-button {
+  align-self: center;
+  border-left: 1000px solid white;
+}
+
+.download {
+  margin-left: 1000px;
+}
+
+/* hr{
+  margin: 8px;
+  border: 1px solid black;
+} */

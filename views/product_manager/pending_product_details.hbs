@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Product</title>
+    <link rel="stylesheet" href="/pending_product_details.css">
+    <link rel="stylesheet" href="/similar_products.css">
+    <link rel="stylesheet" href="/navbar.css">
+</head>
+
+<body>
+
+    {{>admin_header_new}}
+
+    <div class="container">
+        <div class="right-box">
+            <div class="main-image-box">
+                <img src="{{pending_product.productImage}}" id="mainImage" class="main-image">
+            </div>
+
+        </div>
+        <div class="detail-box">
+            {{!-- <h1 class="productName">{{pending_product.productName}}</h1>
+            <p class="stock">{{pending_product.stock}}</p>
+            <div class="mrp price">
+                <p><del>₹ {{pending_product.price}}</del> ( {{pending_product.discountPercentage}}% off )</p>
+            </div>
+            <h2 class="price">₹ {{pending_product.discountedPrice}}/-</h2>
+
+            <input type="text" name="pID" value="{{pending_product._id}}" style="display: none;">
+
+            </p>
+            <h4 class="description">Product Details :-</h4>
+            <p class="full-description">{{pending_product.productDescription}}</p>
+
+            {{#each pending_product.customAttributes}}
+            <p class="full-description">{{this.name}}: {{this.value}}</p>
+            {{/each}} --}}
+
+            {{!-- <h4 class="description">Product Name :-</h4> --}}
+            <div>
+                <p class="productName"><b>Product Name:- </b>{{pending_product.productName}}</p>
+            </div>
+
+            {{!-- <h4 class="description">Product Category :-</h4> --}}
+            <div>
+                <p class="productName"><b>Product Category:- </b>{{pending_product.productCategory}}</p>
+            </div>
+
+
+            <div>
+                <p class="productName"><b>Seller ID:- </b>{{pending_product.sellerID}}</p>
+            </div>
+            {{!-- <p class="stock">{{pending_product.stock}}</p> --}}
+            {{!-- <div class="mrp price">
+                <p><del>₹ {{pending_product.price}}</del> ( {{pending_product.discountPercentage}}% off )</p>
+            </div> --}}
+            {{!-- <h2 class="price">₹ {{pending_product.discountedPrice}}/-</h2> --}}
+
+            {{!-- <input type="text" name="pID" value="{{pending_product._id}}" style="display: none;">
+
+            </p> --}}
+            <div>
+                <h4 class="description">Product Description :-</h4>
+                <p class="full-description">{{pending_product.productDescription}}</p>
+            </div>
+
+            <div>
+                <h4 class="description">Peoduct Details:-</h4>
+                {{#each pending_product.customAttributes}}
+                <p class="full-description">{{this.name}}: {{this.value}}</p>
+                {{/each}}
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="container2">
+        <form action="/approve_product/{{pending_product._id}}?_method=PUT" method="post">
+            {{!-- <input type="text" placeholder="Status" name="status"> --}}
+            <select name="status" class="input" id="">
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <input type="text" class="input" placeholder="Message" name="message">
+            <input type="submit" class="input submit" value="Submit">
+        </form>
+    </div>
+
+
+
+</body>
+<script src="/script/pNameCut.js"></script>
+<script src="/script/footer_position.js"></script>
+
+</html>

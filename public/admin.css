@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    border-radius: border-box;
+}
+body{
+    background-color: rgb(221, 255, 243);
+}
+.entry{
+    background-color: black;
+    color: white;
+    width: 60vw;
+    padding: 10px 0;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+
+/* after adding custom attributes part */
+#custom-attributes{
+    margin: 20px auto;
+}
+.features input{
+    width: 200px;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+}
+.features button{
+    width: 100px;
+    padding: 10px;
+    background-color: red;
+    font-size: 16px;
+    color: white;
+    border: 0px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.features{
+    margin-bottom: 10px;
+}
+#add-attribute{
+    background-color: green;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

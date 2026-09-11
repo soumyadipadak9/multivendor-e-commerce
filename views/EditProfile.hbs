@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/EditProfile.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
+</head>
+<body>
+    {{>header}}
+    <div id="container">
+        <h1>Edit Profile</h1>
+
+            <form action="/EditProfile?_method=PUT" method="POST" id="box">
+                
+                <div class="title">Name:</div>
+                <input type="text" name="name" value="{{name}}" placeholder="name" class="input" required maxlength="40">
+
+                <div class="title">Email:</div>
+                <input type="email" name="email" value="{{email}}" placeholder="email" class="input" required maxlength="40">
+
+                <div class="title">Contact Number:</div>
+                <input type="number" name="contactNo" value="{{contactNo}}" placeholder="Contact Number" class="input" min="1000000000" max="9999999999">
+                
+                <div class="addr">Address</div>
+                <div class="title">Street:</div>
+                <input type="text" name="street" value="{{street}}" placeholder="Street" class="input" maxlength="30">
+
+                <div class="title">City:</div>
+                <input type="text" name="city" value="{{city}}" placeholder="City" class="input" maxlength="20">
+
+                <div class="title">State:</div>
+                <input type="text" name="state" value="{{state}}" placeholder="State" class="input" minlength="20">
+
+                <div class="title">Zipcode:</div>
+                <input type="number" name="zipcode" value="{{zipcode}}" placeholder="zipcode" class="input" min="100000" max="999999">
+
+                <div class="title">Full Address:</div>
+                <textarea name="fullAddr" placeholder="Full address" class="fullAddr">{{fullAddr}}</textarea>
+
+                <input type="submit" id="submit" value="Update Profile">
+            </form>
+</body>
+    <script src="/script/footer_position.js"></script>
+</html>

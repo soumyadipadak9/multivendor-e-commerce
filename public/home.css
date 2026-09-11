@@ -1,0 +1,131 @@
+/** Home Page 1st line **/
+.first-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 35px;
+}
+
+.box {
+    border: 12px solid rgb(255, 255, 255);
+    height: 300px;
+    background-color: white;
+    margin-top: 25px;
+}
+
+.category_name, .shop_now{
+    color: black;
+    text-align: left;
+}
+
+.box-img {
+    height: 100px;
+    width: 100px;
+}
+
+
+.product_container{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.558);;
+    width: 95%;
+    margin:10px auto;
+}
+
+/** Home Page 3rd Line **/
+.third-line {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.box2 {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-wrap: wrap;
+    border: 12px solid rgb(255, 255, 255);
+    height: 25px;
+    width: 94.5%;
+    /* margin-top: 25px; */
+    margin-left: 35px;
+    background-color: rgb(255, 255, 255);
+}
+
+.h2{
+   align-items: center;
+}
+
+.box2-box {
+    margin-top: 80px;
+}
+
+
+/** fourth-box **/
+.fourth-box {
+    background-color: rgb(186, 186, 186);
+    display: flex;
+    flex-wrap: wrap;
+    align-self: center;
+    justify-content: space-evenly;
+    background-color: rgb(255, 255, 255);
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-bottom: 35px;
+    align-self: center;
+}
+
+.p-box{
+    margin-bottom: 25px;
+}
+
+.fourth-box-box {
+    /* height: 400px; */
+    /* width: 18%; */
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.558);
+    border-radius: 20px;
+}
+
+.fourth-box-img {
+    width: 240px;
+    height: 320px;
+    align-self: center;
+}
+
+.pName{
+    color: black;
+    font-size: 20px;
+}
+
+.fourth-box-content {
+    margin-top: 10px;
+    margin-left: 22px;
+    margin-right: 22px;
+    margin-bottom: 10px;
+}
+
+.fourth-box-p {
+    align-content: center;
+}
+
+.fourth-box-detainls {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: center;
+    justify-content: space-around;
+    margin-top: 5px;
+}
+
+.product-price {
+    color: rgba((13, 1, 1, 0.562)0, 0);
+    text-decoration: line-through;
+    color: #fc0000;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.discount-percentage{
+    color: blue;
+    font-size: 20px;
+}
+.discounted-price{
+    color: green;
+    font-size: 20px;
+}

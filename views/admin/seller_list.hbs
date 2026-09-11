@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/user.css">
+    <link rel="stylesheet" href="/footer.css">
+</head>
+
+<body>
+
+    {{>admin_header_new}}
+
+    <div id="search">
+        <input type="text" placeholder="Search User" class="search" onkeyup="keyup()">
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">Seller List</h1>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>User id</th>
+                    <th>User name</th>
+                    <th>Email</th>
+                    <th>Contact no</th>
+                    <th>GST no.</th>
+                    <th>Store Name</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each sellers}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td class="name">{{this.name}}</td>
+                    <td class="email">{{this.email}}</td>
+                    <td>{{this.contactNo}}</td>
+                    <td>{{this.gstNo}}</td>
+                    <td>{{this.storeName}}</td>
+                    <td class="active_{{this.active}}"></td>
+                    <td><a href="/admin/seller/{{this._id}}"><button class="action-button details-button">Details</button></a>
+                    </td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </div>
+
+    {{>footer}}
+</body>
+
+<script>
+    function keyup() {
+        var s = document.getElementsByClassName('search')[0].value.toUpperCase()
+        var len = s.length
+        // console.log(len)
+        let userName = document.getElementsByClassName('name');
+        let email = document.getElementsByClassName('email');
+        for (let i = 0; i < userName.length; i++) {
+            if (userName[i].innerText.toUpperCase().indexOf(s) != -1 || email[i].innerText.toUpperCase().indexOf(s) != -1) {
+                userName[i].parentElement.style.display = ''
+            }
+            else {
+                userName[i].parentElement.style.display = 'none'
+            }
+        }
+    }
+
+    const active_true_length = document.getElementsByClassName("active_true").length;
+    for (let i = 0; i < active_true_length; i++) {
+        document.getElementsByClassName("active_true")[i].innerText = "Active";
+    }
+
+    const active_false_length = document.getElementsByClassName("active_false").length;
+    for (let i = 0; i < active_true_length; i++) {
+        document.getElementsByClassName("active_false")[i].innerText = "Inactive";
+    }
+
+</script>
+
+<script src="/script/footer_position.js"></script>
+
+</html>

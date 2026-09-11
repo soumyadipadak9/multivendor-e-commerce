@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Product</title>
+    <link rel="stylesheet" href="/product_details.css">
+    <link rel="stylesheet" href="/similar_products.css">
+    <link rel="stylesheet" href="/navbar.css">
+</head>
+
+<body>
+
+    {{>header}}
+
+    <div class="container">
+        <div class="right-box">
+            <div class="main-image-box">
+                <img src="{{productImage}}" id="mainImage" class="main-image">
+            </div>
+
+        </div>
+        <div class="detail-box">
+            <h1 class="productName">{{productName}}</h1>
+            <p class="stock">{{stock_status}}</p>
+            <div class="mrp price">
+                <p><del>₹ {{price}}</del> ( {{discountPercentage}}% off )</p>
+            </div>
+            <h2 class="price">₹ {{discountedPrice}}/-</h2>
+            {{!-- <label for="Quantity">Quantity (Max. 5) :- </label>
+            <select name="" id="Quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select> --}}
+
+            <div class="rating">
+                {{!-- <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span> --}}
+                <span class="star">{{average_ratings}}&#9733;</span>
+                <span class="num_ratings">({{product_ratings_length}} ratings)</span>
+            </div>
+
+            <div class="all_btn">
+                {{{cart_button}}}
+                <button class="wishlistButton">
+                    <form class="wishlistForm" action="/order_now" method="GET">
+                        <input type="text" name="pID" value="{{_id}}" style="display: none;">
+                        <input type="submit" value="Buy Now">
+                    </form>
+                </button>
+                {{{wishlist_btn}}}
+                {{{update}}}
+            </div>
+
+            <h4 class="description">Product Description:</h4>
+            <p class="full-description">{{productDescription}}</p>
+
+
+            <h4 class="details">Full Details:</h4>
+            {{#each features}}
+            <p class="full-details"><span class="key">{{this.name}}:</span> <span class="value">{{this.value}}</span></p>
+            {{/each}}
+        </div>
+    </div>
+
+
+    <h2 class="title similar">Similar Products:</h2>
+    <hr class="similar">
+    <div class="product-grid similar">
+        {{#each SimilarProducts}}
+        <a href="/products/{{this._id}}">
+            <!-- 1st Product -->
+            <div class="product-card">
+                <img src="{{this.productImage}}" alt="Product Image">
+                <div class="product-details">
+                    <p><strong class="pName">{{this.productName}}</strong></p>
+                    <p class="star_ratings" product_id="{{this._id}}">
+                        <span class="star2" data-value="1">&#9733;</span>
+                        <span class="star2" data-value="2">&#9733;</span>
+                        <span class="star2" data-value="3">&#9733;</span>
+                        <span class="star2" data-value="4">&#9733;</span>
+                        <span class="star2" data-value="5">&#9733;</span>
+                    </p>
+                    <p class="product-price">₹{{this.price}}</p>
+                    <p class="discount-percentage">{{this.discountPercentage}}% off</p>
+                    <p class="discounted-price">₹{{this.discountedPrice}}</p>
+                </div>
+            </div>
+        </a>
+        {{/each}}
+    </div>
+
+
+    <div id="all_review">
+        <p id="review_heading">Reviews:</p>
+        {{#each product_ratings}}
+        <hr>
+        <div class="review">
+            <p class="review_name">{{this.UID.name}}</p>
+            {{!-- <p class="review_ratings">{{this.ratings}}</p> --}}
+            <p class="review_ratings" ratings_points="{{this.ratings}}">
+                <span class="star3" data-value="1">&#9733;</span>
+                <span class="star3" data-value="2">&#9733;</span>
+                <span class="star3" data-value="3">&#9733;</span>
+                <span class="star3" data-value="4">&#9733;</span>
+                <span class="star3" data-value="5">&#9733;</span>
+            </p>
+            <p class="review_review">{{this.review}}</p>
+        </div>
+        {{/each}}
+        <hr>
+    </div>
+
+
+</body>
+<script src="/script/pNameCut.js"></script>
+<script src="/script/footer_position.js"></script>
+<script src="/script/star_ratings_products.js"></script>
+<script>
+    //console.log(document.getElementsByClassName("review_ratings")[0].getAttribute("ratings_points"));
+    const review = document.getElementsByClassName("review");
+    const review_ratings = document.getElementsByClassName("review_ratings");
+    for (let i = 0; i < review.length; i++) {
+        for (let j = 0; j < review_ratings[i].getAttribute("ratings_points"); j++) {
+            review_ratings[i].children[j].style.color = "green";;
+        }
+    }
+
+
+    const full_details=document.getElementsByClassName("full-details");
+    //console.log(full_details);
+    //console.log("skddskmdsk "+full_details.length);
+
+    var is_pDetails=0;
+    for(let i=0;i<full_details.length;i++){
+        if(document.getElementsByClassName("value")[i].innerText==""){
+            document.getElementsByClassName("value")[i].parentElement.style.display="none"
+            is_pDetails+=1;
+        }
+    }
+
+    if(full_details.length==is_pDetails){
+        document.getElementsByClassName("details")[0].style.display="none";
+    }
+
+
+    
+
+</script>
+
+</html>

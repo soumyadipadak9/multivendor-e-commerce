@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/user.css">
+    <link rel="stylesheet" href="/employee.css">
+    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="/employee_delete.css">
+</head>
+
+<body>
+
+    {{!-- {{>admin_header}} --}}
+    {{>admin_header_new}}
+
+
+<button id="add" onclick="clickAdd()">Add Employee</button>
+
+<div id="main-container" style="display: none;">
+        <div id="container">
+        <span class="cross" onclick="containerNone()">X</span>
+            <h1>Add Employee</h1>
+    <form action="/employee" method="post" id="create">
+        <input type="text" name="name" required placeholder="Name" class="input" required maxlength="40">
+        <input type="email" required name="email" placeholder="Email" class="input" required maxlength="40">
+        <select name="role" class="input">
+            <option value="Product Manager">Product Manager</option>
+            <option value="Delivery Manager">Delivery Manager</option>
+            <option value="User Manager">User Manager</option>
+        </select>
+        <input type="password" required name="password" placeholder="Password" class="input" required minlength="5" maxlength="10">
+        <input type="password" required name="confirm_password" placeholder="Confirm Password" class="input" required minlength="5" maxlength="10">
+        <input type="submit" id="submit" value="Add Employee">
+    </form>
+    <p>{{err}}</p>
+    </div>
+    </div>
+
+
+    <div id="main-container2" style="display: none;">
+        <div id="container2">
+        <span class="cross" onclick="containerNone()">X</span>
+            <h1>Update Employee</h1>
+    <form method="post" id="update">
+        <input type="text" name="_id" required placeholder="Id" class="input" required maxlength="40" readonly>
+        <input type="text" name="name" required placeholder="Name" class="input" required maxlength="40" readonly>
+        <input type="email" required name="email" placeholder="Email" class="input" required maxlength="40" readonly>
+        <select name="role" class="input">
+            <option value="Product Manager">Product Manager</option>
+            <option value="User Manager">User Manager</option>
+        </select>
+        {{!-- <input type="text" required name="role" placeholder="Role" class="input" required maxlength="20"> --}}
+        
+        {{!-- <input type="password" required name="password" placeholder="Password" class="input" required minlength="5" maxlength="10">
+        <input type="password" required name="confirm_password" placeholder="Confirm Password" class="input" required minlength="5" maxlength="10"> --}}
+        <input type="submit" id="submit" value="Update Employee">
+    </form>
+    <p>{{err}}</p>
+    </div>
+    </div>
+
+    <div id="search">
+        <input type="text" placeholder="Search User" class="search" onkeyup="keyup()">
+    </div>
+
+    <div class="container" id="employee_table">
+        <h1 class="page-title">Employee List</h1>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    {{!-- <th>Active</th> --}}
+                    <th colspan=2>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each emp}}
+                <tr id="{{this._id}}">
+                    <td>{{this._id}}</td>
+                    <td class="name">{{this.name}}</td>
+                    <td class="email">{{this.email}}</td>
+                    <td>{{this.role}}</td>
+                    {{!-- <td class="active_{{this.active}}"></td> --}}
+                    {{!-- <td><a href="/user/{{this._id}}"><button class="action-button details-button">Details</button></a>
+                    </td> --}}
+                    
+                    <td><button class="action-button details-button" onclick="clickUpdate('{{this._id}}')">Update</button></td>
+                    <td><button class="action-button details-button" id="delete_btn" onclick="clickDelete('{{this._id}}')">Delete</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="delete" style="display: none;">
+        <p>Do you really want to delete this employee?</p>
+        <div id="delete_option">
+            {{!-- <button onclick="cancel_popup()">Cancel</button>
+            <form action="/employee/{{target_note._id}}?_method=DELETE" method="post">
+                <input type="submit" id="confirm_delete" value="Delete">
+            </form> --}}
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+    {{!-- {{>footer}} --}}
+</body>
+
+
+<script>
+
+    function clickAdd(){
+        document.getElementById("main-container").style.display='';
+        document.getElementById("main-container2").style.display='none';
+        document.getElementById("search").style.display='none';
+        document.getElementById("employee_table").style.display='none';
+    }
+
+
+    function clickUpdate(e){
+        document.getElementById("main-container2").style.display='';
+        document.getElementById("main-container").style.display='none';
+        document.getElementById("search").style.display='none';
+        document.getElementById("employee_table").style.display='none';
+        const update_form = document.getElementById("update");
+        console.log(update_form);
+
+        update_form.action=`/employee/${e}?_method=PUT`;
+
+        const table_data = document.getElementById(e);
+        {{!-- console.log(table_data.children[0].innerText) --}}
+
+        for(let i=0;i<4;i++){
+            update_form[i].value=table_data.children[i].innerText;
+        }
+    }
+
+    function clickDelete(e){
+        document.getElementById("delete").style.display = "";
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("delete_option").innerHTML=`<button onclick="cancel_popup()">Cancel</button>
+            <form action="/employee/${e}?_method=DELETE" method="post">
+                <input type="submit" id="confirm_delete" value="Delete">
+            </form>`;
+    }
+
+    function cancel_popup() {
+        document.getElementById("delete").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    function containerNone(){
+        document.getElementById("main-container").style.display="none";
+        document.getElementById("main-container2").style.display="none";
+        document.getElementById("search").style.display='';
+        document.getElementById("employee_table").style.display='';
+    }
+</script>
+
+{{!-- <script>
+    function keyup() {
+        var s = document.getElementsByClassName('search')[0].value.toUpperCase()
+        var len = s.length
+        // console.log(len)
+        let userName = document.getElementsByClassName('name');
+        let email = document.getElementsByClassName('email');
+        for (let i = 0; i < userName.length; i++) {
+            if (userName[i].innerText.toUpperCase().indexOf(s) != -1 || email[i].innerText.toUpperCase().indexOf(s) != -1) {
+                userName[i].parentElement.style.display = ''
+            }
+            else {
+                userName[i].parentElement.style.display = 'none'
+            }
+        }
+    }
+
+    const active_true_length = document.getElementsByClassName("active_true").length;
+    for (let i = 0; i < active_true_length; i++) {
+        document.getElementsByClassName("active_true")[i].innerText = "Active";
+    }
+
+    const active_false_length = document.getElementsByClassName("active_false").length;
+    for (let i = 0; i < active_true_length; i++) {
+        document.getElementsByClassName("active_false")[i].innerText = "Inactive";
+    }
+
+</script>
+
+<script src="/script/footer_position.js"></script> --}}
+
+</html>

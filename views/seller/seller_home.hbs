@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller</title>
+    <link rel="stylesheet" href="/admin_home.css">
+    <link rel="stylesheet" href="/navbar.css">
+</head>
+<body>
+     {{>seller_header}}
+
+    <h1 class="welcome">Welcome to Seller Dashboard</h1>
+    <div class="container">
+
+        <div class="box" onclick="location.href='/seller/approved_product_list';">
+            {{!-- <img src="product_logo.png" alt="Logo"> --}}
+            <h3>Approved Products</h3>
+            <p>Total: {{approved_products_length}}</p>
+        </div>
+
+        <div class="box" onclick="location.href='/seller/pending_product_list';">
+            {{!-- <img src="user_logo.png" alt="Logo"> --}}
+            <h3>Pending Products</h3>
+            <p>Total: {{pending_products_length}}</p>
+        </div>
+
+        <div class="box" onclick="location.href='/seller/rejected_product_list';">
+            {{!-- <img src="seller_logo.png" alt="Logo"> --}}
+            <h3>Rejected Products</h3>
+            <p>Total: {{rejected_products_length}}</p>
+        </div>
+
+        <div class="box" onclick="location.href='/seller/Threshold_crossed';">
+            {{!-- <img src="subadmin_logo.png" alt="Logo"> --}}
+            <h3>Threshold Crossed</h3>
+            <p>Total: {{threshold_crossed_length}}</p>
+        </div>
+
+    </div>
+
+    <div class="container2">
+        <div class="chart-container">
+            <canvas id="salesChart" width="700" height="400"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="itemsChart" width="700" height="400"></canvas>
+        </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const url = `http://localhost:8000/Sellersales`;
+
+    //async function fetchData() {
+    //    const response = await fetch(url);
+    //    const dataObj = await response.json();
+    //    // You can manipulate or use the dataObj here as needed
+    //    return dataObj;
+    //}
+
+
+
+    async function fetchData() {
+        const response = await fetch(url);
+        const dataObj = await response.json();
+
+        // Iterate over each date in the 'Day' array and format it
+        dataObj.Day = dataObj.Day.map(dateString => {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-GB'); // Change 'en-GB' to your desired locale
+        });
+
+        return dataObj;
+    }
+
+
+
+    async function fetchDataAndLog() {
+        const sales_data = await fetchData();
+        console.log(sales_data);
+
+        console.log(sales_data.totalAmount);
+        console.log(sales_data.totalItems);
+
+        const days = sales_data.Day;
+        const totalSalesAmountPerDay = sales_data.totalAmount;
+        const totalItemsSoldPerDay = sales_data.totalItems;
+
+        // *******************************************************************************
+
+
+
+        // Create sales chart
+        var salesChart = new Chart(document.getElementById('salesChart'), {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [{
+                    label: 'Sales Amount',
+                    data: totalSalesAmountPerDay,
+                    fill: false,
+                    borderColor: '#FF6384',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Create items chart
+        var itemsChart = new Chart(document.getElementById('itemsChart'), {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [{
+                    label: 'Items Sold',
+                    data: totalItemsSoldPerDay,
+                    fill: false,
+                    borderColor: '#36A2EB',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    }
+
+    fetchDataAndLog(); // Call this function to fetch data and log it
+
+</script>
+
+</html>
