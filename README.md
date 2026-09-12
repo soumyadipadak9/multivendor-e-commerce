@@ -39,5 +39,5 @@ The platform supports **5 distinct user roles**:
 
 ## 💻 Contributors
 
-- **Soumyadip Adak** - *Full Stack Developer*
-- **[Friend's Name/GitHub Handle]** - *Full Stack Developer*
+- [Soumyadip Adak](https://github.com/soumyadipadak9)
+- [Sayan Mondal](https://github.com/sayan-coder-mondal)
